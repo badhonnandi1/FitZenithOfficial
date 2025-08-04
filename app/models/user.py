@@ -57,9 +57,6 @@ class User(db.Model):
     def getUser(id):
         return User.query.get(id)
 
-    def __repr__(self):
-        return f'<User {self.name}>'
-
     def to_dict(self):
         return {
             'id': self.id,
