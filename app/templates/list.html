@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marathon Events - FitZenith</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/marathon.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <header id="main-header">
+        <div class="container">
+            <a href="{{ url_for('main.landing_page') }}" class="logo">Fit<strong>Zenith</strong></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{{ url_for('marathon.list_marathons') }}" class="active">Marathons</a></li>
+                    <li><a href="{{ url_for('main.landing_page') }}#features">Features</a></li>
+                    <li><a href="{{ url_for('main.landing_page') }}#programs">Programs</a></li>
+                </ul>
+            </nav>
+            <div class="header-buttons">
+                <a href="{{ url_for('main.view_profile') }}" class="btn btn-secondary">Profile</a>
+                <a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" style="min-height: 50vh;">
+            <div class="hero-overlay" style="background: rgba(10,10,10,0.8);"></div>
+            <div class="container hero-content">
+                <h1 class="hero-title">Upcoming <span class="gradient-text">Marathons</span></h1>
+                <p class="hero-subtitle">Find your next challenge from our curated list of upcoming races.</p>
+            </div>
+        </section>
+
+        <section id="programs" class="marathon-page-section">
+            <div class="container">
+                
+                <div class="programs-grid">
+                    {% for marathon in marathons %}
+                    <a href="{{ url_for('marathon.marathon_detail', marathon_id=marathon.id) }}" class="program-card">
+                        <img src="https://aims-worldrunning.org/system/articles/images/000/001/586/large/image.png">
+                        <div class="program-overlay">
+                            <h3>{{ marathon.title }}</h3>
+                            <p><i class="fas fa-calendar-alt"></i> {{ marathon.date.strftime('%B %d, %Y') }}</p>
+                            <p><i class="fas fa-map-marker-alt"></i> {{ marathon.location }}</p>
+                            <span class="program-link">View Details <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div style="grid-column: 1 / -1; text-align: center;">
+                        <p class="section-subtitle">No upcoming marathons at the moment. Please check back soon!</p>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+            <div class="container">
+
+                {% if session.get('role') == 'admin' %}
+                    <a href="{{ url_for('marathon.create_marathon') }}" class="btn btn-primary">Create New Marathon</a>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col about">
+                    <a href="#" class="logo">Fit<strong>Zenith</strong></a>
+                    <p>The operating system for serious fitness professionals and their clients.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Updates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Acceptable Use</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FitZenith. All Rights Reserved. Badhon Nandi.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

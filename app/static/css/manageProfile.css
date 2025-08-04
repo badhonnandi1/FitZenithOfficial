@@ -1,0 +1,181 @@
+/* ===================================================================
+   ENHANCED UPDATE PROFILE PAGE STYLES
+   =================================================================== */
+
+   #update-profile-section {
+    padding-top: 140px;
+    padding-bottom: 100px;
+    background-color: var(--dark-bg);
+    min-height: 100vh;
+}
+
+.update-form-container {
+    max-width: 850px;
+    margin: 0 auto;
+    background: var(--surface-color);
+    border-radius: 16px;
+    padding: 40px 50px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.form-header .section-title {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.update-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 15px;
+    margin-bottom: 5px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    transition: color 0.3s;
+}
+
+.input-wrapper input {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 13px 16px 13px 45px; /* Left padding for icon */
+    font-size: 1rem;
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    width: 100%;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Style date input to show placeholder */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.3;
+}
+
+.input-wrapper input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(0, 179, 219, 0.2);
+}
+
+.input-wrapper input:focus + i,
+.input-wrapper:focus-within i {
+    color: var(--primary-color);
+}
+
+
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 20px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border-color);
+}
+
+/* --- Responsiveness --- */
+@media (max-width: 768px) {
+    .update-form-container {
+        padding: 30px 20px;
+    }
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .form-buttons {
+        flex-direction: column-reverse;
+        gap: 12px;
+    }
+    .form-buttons .btn {
+        width: 100%;
+    }
+}
+
+
+.update-form-container {
+    padding: 40px 50px 50px; 
+}
+
+.profile-picture-editor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.current-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--primary-color);
+    box-shadow: 0 0 15px rgba(0, 179, 219, 0.3);
+}
+
+.picture-upload-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.picture-upload-label:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+}
+
+.picture-upload-label i {
+    font-size: 1rem;
+}
+
+.profile-upload-input {
+    display: none; 
+}
+

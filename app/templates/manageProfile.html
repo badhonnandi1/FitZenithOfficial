@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile - FitZenith</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/manageProfile.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <header id="main-header">
+        <div class="container">
+            <a href="{{ url_for('main.landing_page') }}" class="logo">Fit<strong>Zenith</strong></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{{ url_for('main.landing_page') }}#features">Features</a></li>
+                    <li><a href="{{ url_for('main.landing_page') }}#how-it-works">How It Works</a></li>
+                    <li><a href="{{ url_for('main.landing_page') }}#programs">Programs</a></li>
+                    <li><a href="{{ url_for('main.landing_page') }}#testimonials">Testimonials</a></li>
+                </ul>
+            </nav>
+            <div class="header-buttons">
+                <a href="{{ url_for('main.view_profile') }}" class="btn btn-secondary">My Profile</a>
+                <a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Logout</a>
+            </div>
+            <button id="mobile-menu-toggle" class="mobile-menu-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </header>
+    <div id="mobile-menu" class="mobile-nav">
+        <ul>
+            <li><a href="{{ url_for('main.landing_page') }}#features">Features</a></li>
+            <li><a href="{{ url_for('main.landing_page') }}#how-it-works">How It Works</a></li>
+            <li><a href="{{ url_for('main.landing_page') }}#programs">Programs</a></li>
+            <li><a href="{{ url_for('main.landing_page') }}#testimonials">Testimonials</a></li>
+            <li class="mobile-buttons"><a href="{{ url_for('main.view_profile') }}" class="btn btn-secondary">My Profile</a></li>
+            <li class="mobile-buttons"><a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Logout</a></li>
+        </ul>
+    </div>
+
+    <section id="update-profile-section">
+        <div class="container">
+            <div class="update-form-container">
+                <div class="form-header">
+                    <h1 class="section-title">Edit Your Profile</h1>
+                    <p class="section-subtitle">Keep your information current to get the best results from our platform.</p>
+                </div>
+
+                <form action="{{ url_for('main.update_profile') }}" method="POST" class="update-form" enctype="multipart/form-data">
+
+                    <div class="profile-picture-editor">
+                        <img src="{{ url_for('static', filename=user.profile_pic) if user.profile_pic else 'https://placehold.co/150x150/00B4DB/FFFFFF?text=User' }}"
+                            alt="Current Profile Picture" class="current-picture" id="image-preview">
+
+                        <label for="profile-upload" class="picture-upload-label">
+                            <i class="fas fa-camera"></i> <span>Change Photo</span>
+                        </label>
+                        <input type="file" id="profile-upload" name="profile_pic" class="profile-upload-input" accept="image/*">
+                    </div>
+
+                    <h3 class="form-section-title">Personal Info</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="name" name="name" value="{{ user.name or '' }}" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" id="phone" name="phone" value="{{ user.phone or '' }}" placeholder="+880 123 456 7890">
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="form-section-title">Fitness Details</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="weight">Weight (kg)</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-weight-scale"></i>
+                                <input type="number" step="0.1" id="weight" name="weight" value="{{ user.weight or '' }}" placeholder="e.g., 75.5">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Height (cm)</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-ruler-vertical"></i>
+                                <input type="number" step="0.1" id="height" name="height" value="{{ user.height or '' }}" placeholder="e.g., 180">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-calendar-alt"></i>
+                                <input type="date" id="dob" name="dob" value="{{ dob_formatted }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="goal">Primary Goal</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-bullseye"></i>
+                                <input type="text" id="goal" name="goal" value="{{ user.goal or '' }}" placeholder="e.g., 'Lose 5kg in 2 months'">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-buttons">
+                        <a href="{{ url_for('main.view_profile') }}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // This script is correct, no changes needed here.
+        document.addEventListener('DOMContentLoaded', function () {
+            const profileUpload = document.getElementById('profile-upload');
+            const imagePreview = document.getElementById('image-preview');
+
+            if (profileUpload && imagePreview) {
+                profileUpload.addEventListener('change', function (event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            imagePreview.src = e.target.result;
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+            const menuToggle = document.getElementById('mobile-menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', () => {
+                    menuToggle.classList.toggle('active');
+                    mobileMenu.classList.toggle('open');
+                });
+            }
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>

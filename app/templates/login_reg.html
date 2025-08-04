@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to FitZenith</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/auth.css">
+
+</head>
+<body>
+    <div class="auth-page-container">
+        <div class="form-section">
+            <div class="form-container">
+                <a href="#" class="logo">Fit<strong>Zenith</strong></a>
+
+                <div id="login-form">
+                    <div class="form-header">
+                        <h2>Welcome Back</h2>
+                    </div>
+                    <form action="#" method="POST">
+                        <div class="input-group">
+                            <label for="login-email">Email Address</label>
+                            <input type="email" id="login-email" name="email" placeholder="you@example.com" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" name="password" placeholder="••••••••" required>
+                        </div>
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" name="remember">
+                                <span class="checkmark"></span>
+                                Remember me
+                            </label>
+                            <a href="#" class="forgot-link">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="submit-btn">Sign In</button>
+                    </form>
+                    <p class="switch-form-text">
+                        No account yet? <a href="#" id="show-register-link">Sign up</a>
+                    </p>
+                </div>
+
+                <div id="register-form" class="hidden">
+                    <div class="form-header">
+                        <h2>Create Account</h2>
+                        <p>Start your journey with us today.</p>
+                    </div>
+                    <form action="" method="POST">
+                        <div class="input-group">
+                            <label for="reg-username">Full Name</label>
+                            <input type="text" id="reg-username" name="username" placeholder="John Doe" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="reg-email">Email Address</label>
+                            <input type="email" id="reg-email" name="email" placeholder="you@example.com" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="reg-password">Password</label>
+                            <input type="password" id="reg-password" name="password" placeholder="Minimum 8 characters" required>
+                        </div>
+                        <button type="submit" class="submit-btn">Create Account</button>
+                    </form>
+                    <p class="switch-form-text">
+                        Already have an account? <a href="#" id="show-login-link">Sign in</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="showcase-section">
+            <div class="showcase-content">
+                <h3>"The body achieves what the mind believes."</h3>
+                <p>— Napoleon Hill</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const showRegisterLink = document.getElementById('show-register-link');
+            const showLoginLink = document.getElementById('show-login-link');
+    
+            showRegisterLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+                history.pushState(null, '', '/register'); 
+            });
+    
+            showLoginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                registerForm.classList.add('hidden');
+                loginForm.classList.remove('hidden');
+                history.pushState(null, '', '/login'); 
+            });
+        });
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitZenith</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/profile.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <header id="main-header">
+        <div class="container">
+            <a href="index.html" class="logo">Fit<strong>Zenith</strong></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="">Features</a></li>
+                    <li><a href="">How It Works</a></li>
+                    <li><a href="">Programs</a></li>
+                    <li><a href="">Testimonials</a></li>
+                </ul>
+            </nav>
+            <div class="header-buttons">
+                <a href="/logout" class="btn btn-primary">Logout</a>
+            </div>
+            <button id="mobile-menu-toggle" class="mobile-menu-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </header>
+    <div id="mobile-menu" class="mobile-nav">
+        <ul>
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="index.html#how-it-works">How It Works</a></li>
+            <li><a href="index.html#programs">Programs</a></li>
+            <li><a href="index.html#testimonials">Testimonials</a></li>
+            <li class="mobile-buttons"><a href="/profile" class="btn btn-secondary">My Profile</a></li>
+            <li class="mobile-buttons"><a href="/logout" class="btn btn-primary">Logout</a></li>
+        </ul>
+    </div>
+
+    <section id="user-profile">
+        <div class="container">
+            <div class="profile-header">
+                <h1 class="section-title">Profile</h1>
+                <p class="section-subtitle">{{ user.name }} here is your  Details</p>
+                <p class="section-subtitle">Note: Always Keep your weight and height updated</p>
+            </div>
+
+            <div class="profile-grid">
+                <div class="profile-card-main">
+                    <div class="profile-picture-container">
+                        <img src="https://placehold.co/150x150/00B4DB/FFFFFF?text=User" alt="User Profile Picture"
+                            class="profile-picture">
+                        <label for="profile-upload" class="profile-upload-label">
+                            <i class="fas fa-camera"></i>
+                        </label>
+                        <input type="file" id="profile-upload" class="profile-upload-input">
+                    </div>
+                    <h2 class="profile-name">{{ user.name }}</h2>
+                    <p class="profile-email"><i class="fas fa-envelope"></i> {{ user.email }}</p>
+                    <p class="profile-phone"><i class="fas fa-phone"></i> {{ user.phone or '+88.....' }}</p>
+                    <a href="/profile/edit" class="btn btn-primary btn-update">Update Profile</a>
+                </div>
+
+                <div class="profile-info-card">
+                    <h3 class="card-title">Personal Information</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Current Weight</span>
+                            <span class="info-value">{{ user.weight}} kg</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Height</span>
+                            <span class="info-value">{{ user.height}} cm</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Date of Birth</span>
+                            <span class="info-value">{{ user.dateOfBirth.strftime('%b %d, %Y') if user.dateOfBirth
+                                }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Primary Goal</span>
+                            <span class="info-value">{{ user.goal or 'Not Set' }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-metrics-card">
+                    <h3 class="card-title">Calculated Metrics</h3>
+                    <div class="metrics-grid">
+                        <div class="metric-item">
+                            <div class="metric-icon"><i class="fas fa-calculator"></i></div>
+                            <span class="metric-label">BMI</span>
+                            <span class="metric-value">{{ '%.1f'|format(user.bmi) if user.bmi else 0}}</span>
+                            <span class="metric-status healthy">Healthy</span>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-icon"><i class="fas fa-fire"></i></div>
+                            <span class="metric-label">BMR</span>
+                            <span class="metric-value">{{ user.bmr}}</span>
+                            <span class="metric-unit">kcal/day</span>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-icon"><i class="fas fa-utensils"></i></div>
+                            <span class="metric-label">Maintenance</span>
+                            <span class="metric-value">{{ user.maintenance_calories}}</span>
+                            <span class="metric-unit">kcal/day</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col about">
+                    <a href="#" class="logo">Fit<strong>Zenith</strong></a>
+                    <p>The operating system for serious fitness professionals and their clients.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Updates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Acceptable Use</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FitZenith. All Rights Reserved. Badhon Nandi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../static/js/script.js"></script>
+</body>
+
+</html>

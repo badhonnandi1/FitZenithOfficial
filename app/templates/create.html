@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Marathon - FitZenith</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <header id="main-header">
+        <div class="container">
+            <a href="{{ url_for('main.landing_page') }}" class="logo">Fit<strong>Zenith</strong></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{{ url_for('marathon.list_marathons') }}" class="active">Marathons</a></li>
+                    <li><a href="{{ url_for('main.landing_page') }}#features">Features</a></li>
+                    <li><a href="{{ url_for('main.landing_page') }}#programs">Programs</a></li>
+                </ul>
+            </nav>
+            <div class="header-buttons">
+                <a href="{{ url_for('main.view_profile') }}" class="btn btn-secondary">Profile</a>
+                <a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Logout</a>
+
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="cta" style="padding: 100px 0;">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Create New Marathon Event</h2>
+                    <p class="section-subtitle">Fill out the details below to add a new event to the platform.</p>
+                </div>
+                
+                <div id="create-form" style="background: var(--surface-color); padding: 40px; border-radius: 16px; max-width: 800px; margin: 0 auto; text-align: left;">
+                    <form method="POST" action="{{ url_for('marathon.create_marathon') }}">
+                        <div style="margin-bottom: 20px;">
+                            <label for="title" style="display: block; margin-bottom: 8px; font-weight: 600;">Marathon Title</label>
+                            <input type="text" id="title" name="title" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--dark-bg); color: var(--text-primary);">
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <label for="date" style="display: block; margin-bottom: 8px; font-weight: 600;">Date and Time</label>
+                            <input type="datetime-local" id="date" name="date" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--dark-bg); color: var(--text-primary);">
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <label for="location" style="display: block; margin-bottom: 8px; font-weight: 600;">Location</label>
+                            <input type="text" id="location" name="location" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--dark-bg); color: var(--text-primary);">
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <label for="price" style="display: block; margin-bottom: 8px; font-weight: 600;">Price ($)</label>
+                            <input type="number" id="price" name="price" step="0.01" value="0" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--dark-bg); color: var(--text-primary);">
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <label for="slots" style="display: block; margin-bottom: 8px; font-weight: 600;">Total Slots</label>
+                            <input type="number" id="slots" name="slots" value="100" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--dark-bg); color: var(--text-primary);">
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <label for="description" style="display: block; margin-bottom: 8px; font-weight: 600;">Full Description</label>
+                            <textarea id="description" name="description" rows="6" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--dark-bg); color: var(--text-primary);"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Event</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col about">
+                    <a href="#" class="logo">Fit<strong>Zenith</strong></a>
+                    <p>The operating system for serious fitness professionals and their clients.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Updates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Acceptable Use</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FitZenith. All Rights Reserved. Badhon Nandi.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
