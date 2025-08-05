@@ -75,7 +75,9 @@ class User(db.Model):
     
     @staticmethod
     def getUser(id):
-        return User.query.get(id)
+        sql = text("SELECT * FROM user WHERE id = :user_id")
+        result = db.session.execute(sql, {"user_id": id}).first()
+        return result
 
     def to_dict(self):
         return {
