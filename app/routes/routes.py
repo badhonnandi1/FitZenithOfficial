@@ -8,7 +8,6 @@ main_bp = Blueprint('main', __name__)
 
 @main_bp.route('/')
 def landing_page():
-    """Main landing page route"""
     return render_template('index.html')
 
 @main_bp.route('/afterlogin')
