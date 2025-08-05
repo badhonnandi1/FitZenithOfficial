@@ -52,7 +52,6 @@ The main goal of FitZenith is to **enhance the effectiveness of fitness training
 FitZenith follows the **Model-View-Controller (MVC)** pattern for better maintainability and separation of concerns:
 
 - **Model**: Manages database structure and business logic using SQLAlchemy.
-  - Core Models: `User`, `Marathon`, `MarathonRegistration`
 - **View**: HTML templates powered by **Jinja2** to render the user interface.
 - **Controller**: Flask routes and Blueprints process requests, interact with models, and serve views.
 
