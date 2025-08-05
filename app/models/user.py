@@ -33,6 +33,7 @@ class User(db.Model):
     
     def calculate_bmr(self):
         if not self.height or not self.weight or self.weight <= 0 or self.height <= 0 or not self.dateOfBirth:
+            print(self.dateOfBirth,'end')
             return 0.0
         age = date.today().year - self.dateOfBirth.year
         return round(10 * self.weight + 6.25 * (self.height * 100) - 5 * age, 2)
@@ -51,7 +52,7 @@ class User(db.Model):
     def save(self):
         sql = text("""
             INSERT INTO user (name, email, password, phone, role, dateOfBirth, weight, height, goal)
-            VALUES (:name, :email, :password, :phone, :role, :dob, :weight, :height, :goal)
+            VALUES (:name, :email, :password, :phone, :role, :dateOfBirth, :weight, :height, :goal)
         """)
         db.session.execute(sql, {
             "name": self.name,
@@ -59,7 +60,7 @@ class User(db.Model):
             "password": self.password,
             "phone": self.phone,
             "role": self.role,
-            "dob": self.dateOfBirth,
+            "dateOfBirth": self.dateOfBirth,
             "weight": self.weight,
             "height": self.height,
             "goal": self.goal
@@ -83,7 +84,7 @@ class User(db.Model):
             'phone': self.phone,
             'profile_pic': self.profile_pic,
             'role': self.role,
-            'dob': self.dob.isoformat() if self.dob else None,
+            'dateOfBirth': self.dateOfBirth.isoformat() if self.dateOfBirth else None,
             'weight': self.weight,
             'height': self.height,
             'goal': self.goal,
