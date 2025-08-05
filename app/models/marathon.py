@@ -43,6 +43,10 @@ class Marathon(db.Model):
         db.session.commit()
         return new_marathon, None
 
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
 
 class MarathonRegistration(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -54,6 +58,7 @@ class MarathonRegistration(db.Model):
     @staticmethod
     def checkRegister(user_id, marathon_id):
         return MarathonRegistration.query.filter_by(user_id=user_id, marathon_id=marathon_id).first() is not None
+    
 
     @staticmethod
     def register_user(user_id, marathon_id):

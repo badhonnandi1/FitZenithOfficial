@@ -9,7 +9,7 @@ def list_marathons():
     return render_template('list.html', marathons=all_marathons)
 
 @marathon_bp.route('/create', methods=['GET', 'POST'])
-def create_marathon():
+def createMarathon():
     if session.get('role') != 'admin':
         return redirect(url_for('marathon.list_marathons'))
 
@@ -23,6 +23,17 @@ def create_marathon():
     
     return render_template('create.html')
 
+@marathon_bp.route('/<int:marathon_id>/delete', methods=['POST'])
+def deleteMarathon(marathon_id):
+    if session.get('role') != 'admin':
+        flash('You do not have permission to delete marathons.', 'error')
+        return redirect(url_for('marathon.list_marathons'))
+    marathon = Marathon.get_by_id(marathon_id)
+    if marathon:
+        marathon.delete()
+        flash(f'Marathon "{marathon.title}" deleted successfully!', 'success')
+    return redirect(url_for('marathon.list_marathons'))
+
 @marathon_bp.route('/<int:marathon_id>')
 def marathonDetails(marathon_id):
 
@@ -30,7 +41,7 @@ def marathonDetails(marathon_id):
     is_registered = False
 
     if 'user_id' in session:
-        is_registered = MarathonRegistration.is_user_registered(session['user_id'], marathon_id)
+        is_registered = MarathonRegistration.checkRegister(session['user_id'], marathon_id)
             
     return render_template('details.html', marathon=marathon, is_registered=is_registered)
 

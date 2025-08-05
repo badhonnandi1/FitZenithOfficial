@@ -44,7 +44,7 @@
                 
                 <div class="programs-grid">
                     {% for marathon in marathons %}
-                    <a href="{{ url_for('marathon.marathon_detail', marathon_id=marathon.id) }}" class="program-card">
+                    <a href="{{ url_for('marathon.marathonDetails', marathon_id=marathon.id) }}" class="program-card">
                         <img src="https://aims-worldrunning.org/system/articles/images/000/001/586/large/image.png">
                         <div class="program-overlay">
                             <h3>{{ marathon.title }}</h3>
@@ -64,7 +64,8 @@
             <div class="container">
 
                 {% if session.get('role') == 'admin' %}
-                    <a href="{{ url_for('marathon.create_marathon') }}" class="btn btn-primary">Create New Marathon</a>
+                    <a href="{{ url_for('marathon.createMarathon') }}" class="btn btn-primary">Create New Marathon</a>
+
                 {% endif %}
             </div>
         </section>

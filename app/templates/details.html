@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ marathon.title }} - FitZenith</title>
     <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/marathon.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
@@ -72,7 +73,12 @@
                             <span><i class="fas fa-dollar-sign" style="color: var(--primary-color); margin-right: 8px;"></i> ${{ "%.2f"|format(marathon.price) }}</span>
                         </div>
                         <p style="color: var(--text-secondary); margin-bottom: 32px;">{{ marathon.description|safe }}</p>
-        
+                        {% if session.get('role') == 'admin' %}
+
+                        <form action="{{ url_for('marathon.deleteMarathon', marathon_id=marathon.id) }}" method="POST">
+                            <button type="submit" class="btn btn-primary">Want to delete any marathon?</button>
+                        </form>
+                    {% endif %}
                         {% if 'user_id' in session %}
                             {% if is_registered %}
                                 <button class="btn btn-secondary" disabled>Already Registered</button>
