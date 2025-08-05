@@ -20,7 +20,7 @@ class Marathon(db.Model):
     @staticmethod
     def get_all():
         sql = text("SELECT * FROM marathon ORDER BY date ASC")
-        # .mappings().all() returns a list of dictionary-like objects
+
         result = db.session.execute(sql).mappings().all()
         return result
     
