@@ -1,6 +1,6 @@
 #  FitZenith: Fitness School Management System
 
-**FitZenith** is a comprehensive, web-based platform designed to streamline and centralize the operations of a fitness coaching institution. This system enables structured coordination between **admins**, **instructors**, and **trainees**, supporting features like personalized workout planning, progress tracking, event management, and community engagement—all in one cohesive platform.
+**FitZenith** is a comprehensive, web-based platform designed to streamline and centralize the operations of a fitness coaching institution. This system enables structured coordination between **admins**, **instructors**, and **trainees**, supporting features like personalized workout planning, progress tracking, event management, and community engagement all in one cohesive platform.
 
 >  **Note:** This project is currently under active development.
 
@@ -29,7 +29,7 @@ The main goal of FitZenith is to **enhance the effectiveness of fitness training
 
 ---
 
-## ✨ Key Features
+##  Key Features :3
 
 ###  Profile Management
 - View and update personal details (name, phone number, fitness stats).
