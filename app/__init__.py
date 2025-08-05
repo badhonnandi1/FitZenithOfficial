@@ -18,7 +18,7 @@ def create_app():
 
     from app.routes.auth import auth_bp
     from app.routes.routes import main_bp
-    from app.routes.marathon_routes import marathon_bp 
+    from app.routes.marathon import marathon_bp 
 
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp)
