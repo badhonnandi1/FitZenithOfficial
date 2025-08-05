@@ -56,13 +56,14 @@ class Marathon(db.Model):
         result = db.session.execute(sql, params)
         db.session.commit()
 
+        print(result,end='--')
         new_id = result.lastrowid
         return {"id": new_id, **params}, None 
 
-    def delete(self):
+    @staticmethod
+    def delete_by_id(marathon_id):
         sql = text("DELETE FROM marathon WHERE id = :marathon_id")
-
-        db.session.execute(sql, {"marathon_id": self.id})
+        db.session.execute(sql, {"marathon_id": marathon_id})
         db.session.commit()
 
 class MarathonRegistration(db.Model):

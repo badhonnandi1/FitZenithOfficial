@@ -1,3 +1,4 @@
+from turtle import title
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from app.models.marathon import Marathon, MarathonRegistration
 
@@ -18,7 +19,7 @@ def createMarathon():
         if error:
             flash(f'Error creating event: {error}', 'error')
         else:
-            flash(f'Marathon event "{new_marathon.title}" created successfully!', 'success')
+            flash(f'Marathon event "{new_marathon["title"]}" created successfully!', 'success')
         return redirect(url_for('marathon.list_marathons'))
     
     return render_template('create.html')
@@ -28,10 +29,13 @@ def deleteMarathon(marathon_id):
     if session.get('role') != 'admin':
         flash('You do not have permission to delete marathons.', 'error')
         return redirect(url_for('marathon.list_marathons'))
+
     marathon = Marathon.get_by_id(marathon_id)
+
     if marathon:
-        marathon.delete()
-        flash(f'Marathon "{marathon.title}" deleted successfully!', 'success')
+        Marathon.delete_by_id(marathon_id)
+        flash(f"Marathon \"{marathon['title']}\" deleted successfully!", 'success')
+
     return redirect(url_for('marathon.list_marathons'))
 
 @marathon_bp.route('/<int:marathon_id>')
