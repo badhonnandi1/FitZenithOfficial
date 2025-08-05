@@ -1,5 +1,6 @@
 from app import db
 from datetime import datetime
+from sqlalchemy import text
 
 class Marathon(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,35 +19,51 @@ class Marathon(db.Model):
 
     @staticmethod
     def get_all():
-        return Marathon.query.order_by(Marathon.date.asc()).all()
-
+        sql = text("SELECT * FROM marathon ORDER BY date ASC")
+        # .mappings().all() returns a list of dictionary-like objects
+        result = db.session.execute(sql).mappings().all()
+        return result
+    
     @staticmethod
     def get_by_id(marathon_id):
-        return Marathon.query.get_or_404(marathon_id)
+        sql = text("SELECT * FROM marathon WHERE id = :marathon_id")
 
+        result = db.session.execute(sql, {"marathon_id": marathon_id}).mappings().first()
+        if not result:
+            return None
+        return result
+    
     @staticmethod
     def create(form_data):
         date_str = form_data.get('date')
         if not date_str:
             return None, "Date is required"
-        
+
+
         date = datetime.strptime(date_str, '%Y-%m-%dT%H:%M')
-        new_marathon = Marathon(
-            title=form_data.get('title'),
-            date=date,
-            location=form_data.get('location'),
-            price=float(form_data.get('price', 0)),
-            slots=int(form_data.get('slots', 0)),
-            description=form_data.get('description')
-        )
-        db.session.add(new_marathon)
+        params = {
+            "title": form_data.get('title'),
+            "date": date,
+            "location": form_data.get('location'),
+            "price": float(form_data.get('price', 0)),
+            "slots": int(form_data.get('slots', 0)),
+            "description": form_data.get('description')
+        }
+
+        sql = text("""
+            INSERT INTO marathon (title, date, location, price, slots, description) VALUES (:title, :date, :location, :price, :slots, :description)""")
+
+        result = db.session.execute(sql, params)
         db.session.commit()
-        return new_marathon, None
+
+        new_id = result.lastrowid
+        return {"id": new_id, **params}, None 
 
     def delete(self):
-        db.session.delete(self)
-        db.session.commit()
+        sql = text("DELETE FROM marathon WHERE id = :marathon_id")
 
+        db.session.execute(sql, {"marathon_id": self.id})
+        db.session.commit()
 
 class MarathonRegistration(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -61,22 +78,31 @@ class MarathonRegistration(db.Model):
 
     @staticmethod
     def checkRegister(user_id, marathon_id):
-        return MarathonRegistration.query.filter_by(user_id=user_id, marathon_id=marathon_id).first() is not None
+        sql = text("SELECT EXISTS(SELECT 1 FROM marathon_registration WHERE user_id = :user_id AND marathon_id = :marathon_id)")
+        result = db.session.execute(sql, {"user_id": user_id, "marathon_id": marathon_id}).scalar()
+        return result 
     
 
     @staticmethod
     def register_user(user_id, marathon_id):
-        marathon = Marathon.get_by_id(marathon_id)
-
-        if MarathonRegistration.checkRegister(user_id, marathon_id):
+        if MarathonRegistration.checkRegister_raw(user_id, marathon_id):
             return False, "Tomar Registration kora Done"
 
-        if marathon.slots <= 0:
-            return False, "Jayga nai vai maff kor"
-        else:
-            marathon.slots -= 1
-            new_registration = MarathonRegistration(user_id=user_id, marathon_id=marathon_id)
-            db.session.add(new_registration)
-            db.session.commit()
-            return True, "Registration Hoye Gece"
+        get_slots_sql = text("SELECT slots FROM marathon WHERE id = :marathon_id FOR UPDATE")
+        marathon_slots = db.session.execute(get_slots_sql, {"marathon_id": marathon_id}).scalar()
 
+        if marathon_slots is not None and marathon_slots > 0:
+            
+            update_slots_sql = text("UPDATE marathon SET slots = slots - 1 WHERE id = :marathon_id")
+            db.session.execute(update_slots_sql, {"marathon_id": marathon_id})
+
+            regquery = text(""" INSERT INTO marathon_registration (user_id, marathon_id, registration_time) VALUES (:user_id, :marathon_id, NOW())""")
+
+            db.session.execute(regquery, {"user_id": user_id, "marathon_id": marathon_id})
+
+            db.session.commit()
+            
+            return True, "Registration Hoye Gece"
+        else:
+            db.session.rollback() 
+            return False, "Jayga nai vai maff kor"

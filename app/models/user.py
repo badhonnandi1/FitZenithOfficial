@@ -1,5 +1,6 @@
 from pydoc import text
 from app import db
+from sqlalchemy import text
 from datetime import date, datetime
 
 
@@ -43,14 +44,31 @@ class User(db.Model):
         
     @staticmethod
     def find_by_email(email):
-        return User.query.filter_by(email=email).first()
+        sql = text("SELECT * FROM user WHERE email = email")
+        result = db.session.execute(sql, {"email": email}).first()
+        return result
     
     def save(self):
-        db.session.add(self)
+        sql = text("""
+            INSERT INTO user (name, email, password, phone, role, dateOfBirth, weight, height, goal)
+            VALUES (:name, :email, :password, :phone, :role, :dob, :weight, :height, :goal)
+        """)
+        db.session.execute(sql, {
+            "name": self.name,
+            "email": self.email,
+            "password": self.password,
+            "phone": self.phone,
+            "role": self.role,
+            "dob": self.dateOfBirth,
+            "weight": self.weight,
+            "height": self.height,
+            "goal": self.goal
+        })
         db.session.commit()
     
     def delete(self):
-        db.session.delete(self)
+        sql = text("DELETE FROM user WHERE id = :user_id")
+        db.session.execute(sql, {"user_id": self.id})
         db.session.commit()
     
     @staticmethod
@@ -86,25 +104,23 @@ class User(db.Model):
         return User.query.get(id)
     
     def update(self, form_data):
-
-        self.name = form_data.get('name', self.name)
-        self.phone = form_data.get('phone', self.phone)
-        self.goal = form_data.get('goal', self.goal)
-        
-        weight_str = form_data.get('weight')
-        if weight_str:
-            self.weight = float(weight_str)
-
-        height_str = form_data.get('height')
-        if height_str:
-            self.height = float(height_str)
-        
-        dob_str = form_data.get('dob')
-        if dob_str:
-            self.dateOfBirth = datetime.strptime(dob_str, '%Y-%m-%d').date()
-
-        self.bmi = self.calculate_bmi()
-        self.bmr = self.calculate_bmr()
-        self.maintenance_calories = self.calculate_maintenance_calories()
-
-        self.save()
+        sql = text("""
+            UPDATE user SET
+                name = :name,
+                phone = :phone,
+                goal = :goal,
+                weight = :weight,
+                height = :height,
+                dateOfBirth = :dob
+            WHERE id = :user_id
+        """)
+        db.session.execute(sql, {
+            "name": form_data.get('name'),
+            "phone": form_data.get('phone'),
+            "goal": form_data.get('goal'),
+            "weight": float(form_data.get('weight', 0)),
+            "height": float(form_data.get('height', 0)),
+            "dob": form_data.get('dob'),
+            "user_id": self.id
+        })
+        db.session.commit()
