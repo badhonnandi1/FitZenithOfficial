@@ -120,7 +120,9 @@ class User(db.Model):
         self.goal = form_data.get('goal')
         self.weight = weight
         self.height = height
-        self.dateOfBirth = form_data.get('dateOfBirth', '2000-01-01')
+        self.dateOfBirth = form_data.get('dateOfBirth')
+        if not self.dateOfBirth:
+            self.dateOfBirth = '2000-01-01'
         
         self.bmi = self.calculate_bmi()
         self.bmr = self.calculate_bmr()
