@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,11 +19,27 @@
             border-radius: 8px;
             text-align: center;
         }
-        .alert-success { color: #155724; background-color: #d4edda; border-color: #c3e6cb; }
-        .alert-error { color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; }
-        .alert-info { color: #0c5460; background-color: #d1ecf1; border-color: #bee5eb; }
+
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .alert-error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        .alert-info {
+            color: #0c5460;
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+        }
     </style>
 </head>
+
 <body>
 
     <header id="main-header">
@@ -37,11 +54,11 @@
             </nav>
             <div class="header-buttons">
                 {% if 'user_id' in session %}
-                    <a href="{{ url_for('main.view_profile') }}" class="btn btn-secondary">Profile</a>
-                    <a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Logout</a>
+                <a href="{{ url_for('main.view_profile') }}" class="btn btn-secondary">Profile</a>
+                <a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Logout</a>
                 {% else %}
-                    <a href="{{ url_for('auth.login') }}" class="btn btn-secondary">Login</a>
-                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Get Started</a>
+                <a href="{{ url_for('auth.login') }}" class="btn btn-secondary">Login</a>
+                <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Get Started</a>
                 {% endif %}
             </div>
         </div>
@@ -51,53 +68,64 @@
         <section id="features" style="padding-top: 100px;">
             <div class="container">
                 {% with messages = get_flashed_messages(with_categories=true) %}
-                  {% if messages %}
-                    <div style="max-width: 800px; margin: 0 auto 40px;">
+                {% if messages %}
+                <div style="max-width: 800px; margin: 0 auto 40px;">
                     {% for category, message in messages %}
-                      <div class="alert alert-{{ category }}">{{ message }}</div>
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
                     {% endfor %}
-                    </div>
-                  {% endif %}
+                </div>
+                {% endif %}
                 {% endwith %}
-        
-                <div class="marathon-detail-card" style="background: var(--surface-color); border-radius: 16px; overflow: hidden; display: grid; grid-template-columns: 1fr; md:grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
+
+                <div class="marathon-detail-card"
+                    style="background: var(--surface-color); border-radius: 16px; overflow: hidden; display: grid; grid-template-columns: 1fr; md:grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
                     <div class="marathon-detail-image">
-                        <img src="https://aims-worldrunning.org/system/articles/images/000/001/586/large/image.png" alt="{{ marathon.title }}" style="width: 100%; height: auto; object-fit: cover;">
+                        <img src="https://aims-worldrunning.org/system/articles/images/000/001/586/large/image.png"
+                            alt="{{ marathon.title }}" style="width: 100%; height: auto; object-fit: cover;">
                     </div>
                     <div class="marathon-detail-content" style="padding: 48px;">
                         <h2 class="section-title" style="text-align: left;">{{ marathon.title }}</h2>
-                        <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; color: var(--text-secondary);">
-                            <span><i class="fas fa-calendar-alt" style="color: var(--primary-color); margin-right: 8px;"></i> {{ marathon.date.strftime('%A, %B %d, %Y at %I:%M %p') }}</span>
-                            <span><i class="fas fa-map-marker-alt" style="color: var(--primary-color); margin-right: 8px;"></i> {{ marathon.location }}</span>
-                            <span><i class="fas fa-users" style="color: var(--primary-color); margin-right: 8px;"></i> {{ marathon.slots }} Slots Remaining</span>
-                            <span><i class="fas fa-dollar-sign" style="color: var(--primary-color); margin-right: 8px;"></i> ${{ "%.2f"|format(marathon.price) }}</span>
+                        <div
+                            style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; color: var(--text-secondary);">
+                            <span><i class="fas fa-calendar-alt"
+                                    style="color: var(--primary-color); margin-right: 8px;"></i> {{
+                                marathon.date.strftime('%A, %B %d, %Y at %I:%M %p') }}</span>
+                            <span><i class="fas fa-map-marker-alt"
+                                    style="color: var(--primary-color); margin-right: 8px;"></i> {{ marathon.location
+                                }}</span>
+                            <span><i class="fas fa-users" style="color: var(--primary-color); margin-right: 8px;"></i>
+                                {{ marathon.slots }} Slots Remaining</span>
+                            <span><i class="fas fa-dollar-sign"
+                                    style="color: var(--primary-color); margin-right: 8px;"></i> ${{
+                                "%.2f"|format(marathon.price) }}</span>
                         </div>
-                        <p style="color: var(--text-secondary); margin-bottom: 32px;">{{ marathon.description|safe }}</p>
+                        <p style="color: var(--text-secondary); margin-bottom: 32px;">{{ marathon.description|safe }}
+                        </p>
                         {% if session.get('role') == 'admin' %}
 
                         <form action="{{ url_for('marathon.deleteMarathon', marathon_id=marathon.id) }}" method="POST">
                             <button type="submit" class="btn btn-primary">Want to delete any marathon?</button>
                         </form>
-                    {% endif %}
-                        {% if 'user_id' in session %}
-                            {% if is_registered %}
-                                <button class="btn btn-secondary" disabled>Already Registered</button>
-                            {% elif marathon.slots <= 0 %}
-                                <button class="btn btn-secondary" disabled>Fully Booked</button>
-                            {% else %}
-                                <form action="{{ url_for('marathon.register_for_marathon', marathon_id=marathon.id) }}" method="POST">
-                                    <button type="submit" class="btn btn-primary">Register Now</button>
-                                </form>
-                            {% endif %}
-                        {% else %}
-                            <a href="{{ url_for('auth.login') }}" class="btn btn-primary">Login to Register</a>
                         {% endif %}
+                        {% if 'user_id' in session %}
+                        {% if is_registered %}
+                        <button class="btn btn-secondary" disabled>Already Registered</button>
+                        {% elif marathon.slots <= 0 %} <button class="btn btn-secondary" disabled>Fully Booked</button>
+                            {% else %}
+                            <form action="{{ url_for('marathon.register_for_marathon', marathon_id=marathon.id) }}"
+                                method="POST">
+                                <button type="submit" class="btn btn-primary">Register Now</button>
+                            </form>
+                            {% endif %}
+                            {% else %}
+                            <a href="{{ url_for('auth.login') }}" class="btn btn-primary">Login to Register</a>
+                            {% endif %}
                     </div>
                 </div>
             </div>
         </section>
     </main>
-    
+
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -144,4 +172,5 @@
         </div>
     </footer>
 </body>
+
 </html>
