@@ -105,22 +105,19 @@ class User(db.Model):
     
     def update(self, form_data):
         sql = text("""
-            UPDATE user SET
-                name = :name,
-                phone = :phone,
-                goal = :goal,
-                weight = :weight,
-                height = :height,
-                dateOfBirth = :dob
+            UPDATE user SET name = :name, phone = :phone,
+                goal = :goal, weight = :weight,
+                height = :height, dateOfBirth = :dateOfBirth
             WHERE id = :user_id
         """)
+
         db.session.execute(sql, {
             "name": form_data.get('name'),
             "phone": form_data.get('phone'),
             "goal": form_data.get('goal'),
             "weight": float(form_data.get('weight', 0)),
             "height": float(form_data.get('height', 0)),
-            "dob": form_data.get('dob'),
+            "dateOfBirth": form_data.get('dateOfBirth'),
             "user_id": self.id
         })
         db.session.commit()
