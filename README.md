@@ -62,7 +62,7 @@ FitZenith follows the **Model-View-Controller (MVC)** pattern for better maintai
 | Layer        | Technology                    |
 |--------------|-------------------------------|
 | Backend      | Flask (Python Web Framework)  |
-| Database     | MySQL + SQLAlchemy (ORM)      |
+| Database     | MySQL + SQLAlchemy      |
 | Frontend     | HTML, CSS, JavaScript         |
 | Templates    | Jinja2                        |
 
