@@ -11,6 +11,8 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
 
+        password = User.passwordEncryption(password)
+
         if not email or not password:
             return "<h1>Error: Email and password are required.</h1>"
 

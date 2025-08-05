@@ -54,10 +54,11 @@ class User(db.Model):
             INSERT INTO user (name, email, password, phone, role, dateOfBirth, weight, height, goal)
             VALUES (:name, :email, :password, :phone, :role, :dateOfBirth, :weight, :height, :goal)
         """)
+        password = User.passwordEncryption(self, self.password)
         db.session.execute(sql, {
             "name": self.name,
             "email": self.email,
-            "password": self.password,
+            "password": password,
             "phone": self.phone,
             "role": self.role,
             "dateOfBirth": self.dateOfBirth,
@@ -92,6 +93,19 @@ class User(db.Model):
             'bmr': self.bmr,
             'maintenance_calories': self.maintenance_calories
         }
+
+    @staticmethod
+    def passwordEncryption(password):
+        mystring = ''
+        for i in password:
+            mystring += chr(ord(i) + 3)
+        return mystring
+    
+    # def passwordDecryption(password):
+    #     mystring = ''
+    #     for i in self.password:
+    #         mystring += chr(ord(i) - 3)
+    #     return mystring
 
     @staticmethod
     def findUser(email):
