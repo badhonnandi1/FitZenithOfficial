@@ -64,5 +64,5 @@ def update_profile():
         flash('Your profile has been updated successfully!', 'success')
         return redirect(url_for('main.view_profile'))
 
-    dob_formatted = user.dateOfBirth.strftime('%Y-%m-%d') if user.dateOfBirth else 0
+    dob_formatted = user.dateOfBirth.strftime('%Y-%m-%d') if user.dateOfBirth else ''
     return render_template('manageProfile.html', user=user, dob_formatted=dob_formatted)

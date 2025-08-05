@@ -35,7 +35,7 @@ class User(db.Model):
         if not self.height or not self.weight or self.weight <= 0 or self.height <= 0 or not self.dateOfBirth:
             print(self.dateOfBirth,'end')
             return 0.0
-        age = date.today().year - self.dateOfBirth.year
+        age = 2025 - int(self.dateOfBirth[self.dateOfBirth.rfind('-') + 1:]) 
         return round(10 * self.weight + 6.25 * (self.height * 100) - 5 * age, 2)
 
     def calculate_maintenance_calories(self):
@@ -84,7 +84,7 @@ class User(db.Model):
             'phone': self.phone,
             'profile_pic': self.profile_pic,
             'role': self.role,
-            'dateOfBirth': self.dateOfBirth.isoformat() if self.dateOfBirth else None,
+            'dateOfBirth': self.dateOfBirth.isoformat() if self.dateOfBirth else '2001-01-01',
             'weight': self.weight,
             'height': self.height,
             'goal': self.goal,
@@ -108,17 +108,36 @@ class User(db.Model):
         sql = text("""
             UPDATE user SET name = :name, phone = :phone,
                 goal = :goal, weight = :weight,
-                height = :height, dateOfBirth = :dateOfBirth
+                height = :height, dateOfBirth = :dateOfBirth, bmi = :bmi, bmr = :bmr, maintenance_calories = :maintenance_calories
             WHERE id = :user_id
         """)
+        weight = float(form_data.get('weight', 0))
+        height = float(form_data.get('height', 0))
+        
+
+        self.name = form_data.get('name')
+        self.phone = form_data.get('phone')
+        self.goal = form_data.get('goal')
+        self.weight = weight
+        self.height = height
+        self.dateOfBirth = form_data.get('dateOfBirth', '2000-01-01')
+        
+        self.bmi = self.calculate_bmi()
+        self.bmr = self.calculate_bmr()
+        self.maintenance_calories = self.calculate_maintenance_calories()
 
         db.session.execute(sql, {
-            "name": form_data.get('name'),
-            "phone": form_data.get('phone'),
-            "goal": form_data.get('goal'),
-            "weight": float(form_data.get('weight', 0)),
-            "height": float(form_data.get('height', 0)),
-            "dateOfBirth": form_data.get('dateOfBirth'),
-            "user_id": self.id
+            "name": self.name,
+            "phone": self.phone,
+            "goal": self.goal,
+            "weight":  self.weight,
+            "height": self.height,
+            "dateOfBirth": self.dateOfBirth,
+            "user_id": self.id,
+            "bmi": self.bmi,
+            "bmr": self.bmr,
+            "maintenance_calories": self.maintenance_calories
         })
+
+
         db.session.commit()
