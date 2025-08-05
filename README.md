@@ -6,22 +6,22 @@
 
 ---
 
-## 📑 Table of Contents
+## Table of Contents
 
-- [🎯 Purpose and Target Users](#-purpose-and-target-users)
-- [✨ Key Features](#-key-features)
-- [🏗️ Software Architecture](#-software-architecture)
-- [🧰 Technologies Used](#-technologies-used)
-- [⚙️ Setup and Installation](#-setup-and-installation)
-- [🔁 Application Workflow](#-application-workflow)
+- [ Purpose and Target Users](#-purpose-and-target-users)
+- [ Key Features](#-key-features)
+- [ Software Architecture](#-software-architecture)
+- [ Technologies Used](#-technologies-used)
+- [ Setup and Installation](#-setup-and-installation)
+- [ Application Workflow](#-application-workflow)
 
 ---
 
-## 🎯 Purpose and Target Users
+## Purpose and Target Users
 
 The main goal of FitZenith is to **enhance the effectiveness of fitness training** by providing a centralized, user-friendly platform that solves issues related to fragmented communication and inconsistent tracking via traditional tools (like WhatsApp and spreadsheets).
 
-### 👥 Target Users:
+### Target Users:
 
 - **Admins**: Manage users, programs, and create/delete events.
 - **Instructors**: Guide trainees, assign workouts, and upload resources.
@@ -31,23 +31,23 @@ The main goal of FitZenith is to **enhance the effectiveness of fitness training
 
 ## ✨ Key Features
 
-### 👤 Profile Management
+###  Profile Management
 - View and update personal details (name, phone number, fitness stats).
 - Auto-calculation of **BMI**, **BMR**, and **maintenance calories**.
 
-### 🏃 Event Management
+###  Event Management
 - **Admins only** can create/delete marathon events.
 - Users can view upcoming events and register for available slots.
 
-### 🔐 Secure Authentication
+###  Secure Authentication
 - Session-based login/logout system with account registration.
 
-### 🛡️ Role-Based Access Control
+###  Role-Based Access Control
 - Different views and permissions for admins, instructors, and users.
 
 ---
 
-## 🏗️ Software Architecture
+##  Software Architecture
 
 FitZenith follows the **Model-View-Controller (MVC)** pattern for better maintainability and separation of concerns:
 
@@ -58,7 +58,7 @@ FitZenith follows the **Model-View-Controller (MVC)** pattern for better maintai
 
 ---
 
-## 🧰 Technologies Used
+##  Technologies Used
 
 | Layer        | Technology                    |
 |--------------|-------------------------------|
@@ -69,7 +69,7 @@ FitZenith follows the **Model-View-Controller (MVC)** pattern for better maintai
 
 ---
 
-### ✅ Prerequisites
+###  Prerequisites
 - Python 3.10+
 - MySQL Server installed and running
 
