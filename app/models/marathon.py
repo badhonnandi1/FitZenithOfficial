@@ -85,7 +85,7 @@ class MarathonRegistration(db.Model):
 
     @staticmethod
     def register_user(user_id, marathon_id):
-        if MarathonRegistration.checkRegister_raw(user_id, marathon_id):
+        if MarathonRegistration.checkRegister(user_id, marathon_id):
             return False, "Tomar Registration kora Done"
 
         get_slots_sql = text("SELECT slots FROM marathon WHERE id = :marathon_id FOR UPDATE")
