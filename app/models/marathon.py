@@ -56,7 +56,7 @@ class Marathon(db.Model):
         result = db.session.execute(sql, params)
         db.session.commit()
 
-        print(result,end='--')
+
         new_id = result.lastrowid
         return {"id": new_id, **params}, None 
 
