@@ -3,7 +3,6 @@ from app import db
 from sqlalchemy import text
 from datetime import date, datetime
 
-
 class User(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(50),nullable = False)
@@ -102,12 +101,12 @@ class User(db.Model):
         for i in password:
             mystring += chr(ord(i) + 3)
         return mystring
-    
-    # def passwordDecryption(password):
-    #     mystring = ''
-    #     for i in self.password:
-    #         mystring += chr(ord(i) - 3)
-    #     return mystring
+    @staticmethod
+    def passwordDecryption(password):
+        mystring = ''
+        for i in password:
+            mystring += chr(ord(i) - 3)
+        return mystring
 
     @staticmethod
     def findUser(email):

@@ -25,10 +25,8 @@ def login():
             session['role'] = user.role  
 
             return redirect(url_for('main.afterlogin_page'))
-            
         else:
             return "<h1>Login Failed. Check your email and password.</h1>"
-    
 
     return render_template("login_reg.html")
 
