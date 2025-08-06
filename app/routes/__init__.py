@@ -1,5 +1,5 @@
 # This file makes the routes directory a Python package
-# You can import all route blueprints here if needed
+
 
 from app.routes.routes import main_bp
 from app.routes.auth import auth_bp
