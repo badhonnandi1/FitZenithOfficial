@@ -1,8 +1,5 @@
-/* ===================================================================
-   ENHANCED UPDATE PROFILE PAGE STYLES
-   =================================================================== */
 
-   #update-profile-section {
+#update-profile-section {
     padding-top: 140px;
     padding-bottom: 100px;
     background-color: var(--dark-bg);
@@ -75,7 +72,8 @@
     background-color: var(--bg-color);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 13px 16px 13px 45px; /* Left padding for icon */
+    padding: 13px 16px 13px 45px; 
+    
     font-size: 1rem;
     color: var(--text-primary);
     font-family: var(--font-family);
@@ -83,7 +81,7 @@
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-/* Style date input to show placeholder */
+
 input[type="date"]::-webkit-calendar-picker-indicator {
     opacity: 0.3;
 }

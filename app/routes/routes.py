@@ -32,11 +32,9 @@ def view_profile():
 
 @main_bp.route('/profile/edit')
 def edit_profile():
-    # print('helllo choto vai')
+
 
     user = User().getUser(session.get('user_id'))
-
-    print(user)
 
     if not user:
         return "<h1>User not found.</h1>"
