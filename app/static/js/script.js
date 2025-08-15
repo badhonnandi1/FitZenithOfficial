@@ -133,72 +133,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// Add this new code to the end of your existing script.js file
-
-document.addEventListener('DOMContentLoaded', function () {
-    // --- DASHBOARD ROLE SWITCHER ---
-    const body = document.querySelector('.dashboard-body');
-    
-    // Check if we are on the dashboard page
-    if (body) {
-        const adminBtn = document.getElementById('view-admin-btn');
-        const trainerBtn = document.getElementById('view-trainer-btn');
-        const userBtn = document.getElementById('view-user-btn');
-        const allBtns = [adminBtn, trainerBtn, userBtn];
-
-        const userNameEl = document.getElementById('user-name');
-        const userRoleEl = document.getElementById('user-role');
-        const userAvatarEl = document.getElementById('user-avatar');
-        const welcomeMsgEl = document.getElementById('welcome-message');
-
-        const views = {
-            admin: {
-                name: 'Admin User',
-                role: 'Administrator',
-                avatar: 'https://placehold.co/100x100/0083B0/ffffff?text=A',
-                welcome: 'Welcome, Admin!'
-            },
-            trainer: {
-                name: 'Johnathan Doe',
-                role: 'Head Trainer',
-                avatar: 'https://placehold.co/100x100/00B4DB/ffffff?text=T',
-                welcome: 'Welcome Back, Johnathan!'
-            },
-            user: {
-                name: 'Jessica Lee',
-                role: 'Trainee',
-                avatar: 'https://placehold.co/100x100/00A8C5/ffffff?text=U',
-                welcome: 'Welcome Back, Jessica!'
-            }
-        };
-
-        function switchView(viewName) {
-            // Remove all view classes from body
-            body.classList.remove('admin-view', 'trainer-view', 'user-view');
-            // Add the selected view class
-            body.classList.add(`${viewName}-view`);
-            
-            // Update active button state
-            allBtns.forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`view-${viewName}-btn`).classList.add('active');
-
-            // Update user profile info
-            const viewData = views[viewName];
-            userNameEl.textContent = viewData.name;
-            userRoleEl.textContent = viewData.role;
-            userAvatarEl.src = viewData.avatar;
-            welcomeMsgEl.textContent = viewData.welcome;
-        }
-
-        adminBtn.addEventListener('click', () => switchView('admin'));
-        trainerBtn.addEventListener('click', () => switchView('trainer'));
-        userBtn.addEventListener('click', () => switchView('user'));
-        
-        // Set initial view
-        switchView('user');
-    }
-});
-
 
 document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
@@ -213,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Header scroll effect
+
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
             mainHeader.classList.add('scrolled');
@@ -221,20 +155,3 @@ document.addEventListener('DOMContentLoaded', function() {
             mainHeader.classList.remove('scrolled');
         }
     });
-
-    // Simple interaction for profile picture upload
-    const profileUpload = document.getElementById('profile-upload');
-    const profilePicture = document.querySelector('.profile-picture');
-
-    if (profileUpload && profilePicture) {
-        profileUpload.addEventListener('change', function(event) {
-            if (event.target.files && event.target.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    profilePicture.src = e.target.result;
-                }
-                reader.readAsDataURL(event.target.files[0]);
-            }
-        });
-    }
-});
