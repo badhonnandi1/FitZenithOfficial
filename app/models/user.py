@@ -2,6 +2,7 @@ from pydoc import text
 from app import db
 from sqlalchemy import text
 from datetime import date, datetime
+from flask_mysqldb import MySQL
 
 class User(db.Model):
     id = db.Column(db.Integer,primary_key=True)
@@ -12,12 +13,14 @@ class User(db.Model):
     profile_pic = db.Column(db.String(300), nullable=True, default='static/uploads/profile_pics/default.jpg')
     role = db.Column(db.String(20), default='user')
     dateOfBirth = db.Column(db.Date, nullable=True, default='2000-01-01')
-    weight = db.Column(db.Float, nullable=True, default=0.0)  
-    height = db.Column(db.Float, nullable=True, default=0.0)  
+    weight = db.Column(db.Float, nullable=True, default=0.0)
+    height = db.Column(db.Float, nullable=True, default=0.0)
     goal = db.Column(db.String(100), nullable=True, default='No specific')
     bmi = db.Column(db.Float, nullable=True, default=0.0)
     bmr = db.Column(db.Float, nullable=True, default=0.0)
     maintenance_calories = db.Column(db.Float, nullable=True, default=0.0)
+
+    course_enrollments = db.relationship('CourseEnrollment', backref='user', lazy=True, cascade="all, delete-orphan") # Add this line
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -34,13 +37,13 @@ class User(db.Model):
         if not self.height or not self.weight or self.weight <= 0 or self.height <= 0 or not self.dateOfBirth:
             print(self.dateOfBirth,'end')
             return 0.0
-        age = 2025 - int(self.dateOfBirth[self.dateOfBirth.rfind('-') + 1:]) 
+        age = 2025 - int(self.dateOfBirth[self.dateOfBirth.rfind('-') + 1:])
         return round(10 * self.weight + 6.25 * (self.height * 100) - 5 * age, 2)
 
     def calculate_maintenance_calories(self):
         if self.bmr <= 0:
             return 0.0
-        return round(self.bmr * 1.2)  
+        return round(self.bmr * 1.2)
         
     @staticmethod
     def find_by_email(email):
@@ -53,7 +56,7 @@ class User(db.Model):
             INSERT INTO user (name, email, password, phone, role, dateOfBirth, weight, height, goal)
             VALUES (:name, :email, :password, :phone, :role, :dateOfBirth, :weight, :height, :goal)
         """)
-        password = User.passwordEncryption(self, self.password)
+        password = User.passwordEncryption(self.password)
         db.session.execute(sql, {
             "name": self.name,
             "email": self.email,
@@ -101,12 +104,12 @@ class User(db.Model):
         for i in password:
             mystring += chr(ord(i) + 3)
         return mystring
-    @staticmethod
-    def passwordDecryption(password):
-        mystring = ''
-        for i in password:
-            mystring += chr(ord(i) - 3)
-        return mystring
+    # @staticmethod
+    # def passwordDecryption(password):
+    #     mystring = ''
+    #     for i in password:
+    #         mystring += chr(ord(i) - 3)
+    #     return mystring
 
     @staticmethod
     def findUser(email):

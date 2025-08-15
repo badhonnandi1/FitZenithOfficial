@@ -1,0 +1,127 @@
+#food-tracking-section {
+    padding-top: 140px;
+    padding-bottom: 100px;
+    background-color: var(--dark-bg);
+}
+
+.tracking-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+@media (min-width: 992px) {
+    .tracking-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.tracking-summary-card, .meal-log-card, .search-results-card {
+    background: var(--surface-color);
+    border-radius: 16px;
+    padding: 30px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+.summary-item .label {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.summary-item .value {
+    color: var(--primary-color);
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.food-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.food-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.food-item:last-child {
+    border-bottom: none;
+}
+
+.food-item span:first-child {
+    font-weight: 500;
+}
+
+.food-item .nutrient-info {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-left: auto;
+    margin-right: 15px;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #ff6b6b;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.delete-btn:hover {
+    color: #ff4757;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+}
+
+.search-form input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    background: var(--dark-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-family: var(--font-family);
+}
+
+.search-results-card {
+    margin-top: 40px;
+}
+
+.add-to-meal-buttons {
+    display: flex;
+    gap: 5px;
+}
+.add-to-meal-buttons .btn-sm {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+}

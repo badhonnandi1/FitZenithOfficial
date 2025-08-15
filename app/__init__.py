@@ -5,27 +5,37 @@ db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
-
-
     app.secret_key = 'hello350'
-
     app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:@localhost/fitnessSchool"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    # app.config['UPLOAD_FOLDER'] = 'static/uploads' 
 
     db.init_app(app)
 
     from app.routes.auth import auth_bp
     from app.routes.routes import main_bp
-    from app.routes.marathon import marathon_bp 
+    from app.routes.marathon import marathon_bp
+    from app.routes.instructorRou import instructor_bp
+    from app.routes.course import course_bp
+    from app.routes.foodTracking import food_tracking_bp # Add this line
 
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp)
-    app.register_blueprint(marathon_bp) 
+    app.register_blueprint(marathon_bp)
+    app.register_blueprint(instructor_bp)
+    app.register_blueprint(course_bp)
+    app.register_blueprint(food_tracking_bp) # Add this line
 
     with app.app_context():
         from app.models.user import User
         from app.models.marathon import Marathon, MarathonRegistration
+        from app.models.instructorApplication import InstructorApplication
+        from app.models.course import Course, CourseEnrollment
+        from app.models.foodTracking import Food, FoodLog # Add this line
         db.create_all()
+
+        # Add sample food data
+        if not Food.query.first():
+            from .utils import load_sample_food_data
+            load_sample_food_data()
 
     return app

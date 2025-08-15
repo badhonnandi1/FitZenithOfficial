@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply as Instructor</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/manageProfile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header id="main-header">
+        <div class="container">
+            <a href="#" class="logo">Fit<strong>Zenith</strong></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#programs">Programs</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                </ul>
+            </nav>
+            <div class="header-buttons">
+                <a href="/logout" class="btn btn-secondary">Logout</a>
+            </div>
+            <button id="mobile-menu-toggle" class="mobile-menu-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </header>
+    <div id="mobile-menu" class="mobile-nav">
+        <ul>
+            <li><a href="{{ '/marathons/list' }}">Marathons</a></li>
+            <li><a href="{{ '/' }}#features">Features</a></li>
+            <li><a href="{{ '/' }}#programs">Programs</a></li>
+            <li class="mobile-buttons"><a href="/profile/view" class="btn btn-secondary">My Profile</a></li>
+            <li class="mobile-buttons"><a href="/logout" class="btn btn-primary">Logout</a></li>
+        </ul>
+    </div>
+
+    <section id="update-profile-section">
+        <div class="container">
+            <div class="update-form-container">
+                <div class="form-header">
+                    <h1 class="section-title">Instructor hobi?</h1>
+                    <p class="section-subtitle">Apply kor tahole ei form e</p>
+                </div>
+                <form action="/apply" method="POST" class="update-form">
+                    <h3 class="form-section-title">Personal Details</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="name" name="name" value="{{ user.name or '' }}" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" id="phone" name="phone" value="{{ user.phone or '' }}" placeholder="+880 123 456 7890">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="experience">Years of Experience</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-medal"></i>
+                                <input type="number" id="experience" name="years_of_experience" value="0" min="0" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="reason">Reason</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-comment-alt"></i>
+                                <textarea id="reason" name="reason" rows="6" placeholder="Kno tore ami nebo bol?" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-buttons">
+                        <a href="{{ url_for('main.afterlogin_page') }}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Submit Application</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col about">
+                    <a href="#" class="logo">Fit<strong>Zenith</strong></a>
+                    <p>The operating system for serious fitness professionals and their clients.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Programs</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Updates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Acceptable Use</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FitZenith. All Rights Reserved. Badhon Nandi.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="../static/js/script.js"></script>
+</body>
+</html>

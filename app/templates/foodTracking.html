@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Tracking - FitZenith</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/foodTracking.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .alert-success { color: #155724; background-color: #d4edda; border-color: #c3e6cb; }
+        .alert-error { color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; }
+        .alert-info { color: #0c5460; background-color: #d1ecf1; border-color: #bee5eb; }
+    </style>
+</head>
+<body>
+
+    <header id="main-header">
+        <div class="container">
+            <a href="{{ '/' }}" class="logo">Fit<strong>Zenith</strong></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{{ url_for('food_tracking.food_tracking_page') }}" class="active">Food Tracking</a></li>
+                    <li><a href="{{ '/' }}#features">Features</a></li>
+                    <li><a href="{{ '/' }}#programs">Programs</a></li>
+                </ul>
+            </nav>
+            <div class="header-buttons">
+                {% if 'user_id' in session %}
+                <a href="/profile/view" class="btn btn-secondary">Profile</a>
+                <a href="/logout" class="btn btn-primary">Logout</a>
+                {% else %}
+                <a href="'/login'" class="btn btn-secondary">Login</a>
+                <a href="/register" class="btn btn-primary">Get Started</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section id="food-tracking-section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 class="section-title"><span class="gradient-text">Khabar Add koro</span></h1>
+                    <p class="section-subtitle">Keep track of your food</p>
+                </div>
+                
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <div style="max-width: 800px; margin: 0 auto 40px;">
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+
+                <div class="tracking-grid-single-column">
+                    <div class="tracking-summary-card">
+                        <h3 class="card-title">Daily Totals</h3>
+                        <div class="summary-item">
+                            <span class="label">Calories</span>
+                            <span class="value" id="total-calories">{{ "%.1f"|format(total_calories) }}</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Protein (g)</span>
+                            <span class="value" id="total-protein">{{ "%.1f"|format(total_protein) }}</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Fat (g)</span>
+                            <span class="value" id="total-fat">{{ "%.1f"|format(total_fat) }}</span>
+                        </div>
+                    </div>
+
+                    <div class="meal-log-card">
+                        <h3 class="card-title">Daily Food Log</h3>
+                        <ul class="food-list" id="daily-food-list">
+                            {% for log in all_food_logs %}
+                            <li class="food-item">
+                                <span>{{ log.food.name }}</span>
+                                <span class="nutrient-info">
+                                    {{ "%.1f"|format(log.food.calories) }} cal, {{ "%.1f"|format(log.food.protein) }}g P, {{ "%.1f"|format(log.food.fat) }}g F
+                                </span>
+                                <form action="/food-tracking/delete" method="POST" style="display:inline;">
+                                    <input type="hidden" name="log_id" value="{{ log.id }}">
+                                    <button type="submit" class="delete-btn">&times;</button>
+                                </form>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="search-results-card">
+                        <h3 class="card-title">Search for Food</h3>
+                        <form action="/food-tracking" method="GET" class="search-form">
+                            <input type="text" name="query" placeholder="Search for food..." value="{{ search_query or '' }}" class="food-search-input">
+                            <button type="submit" class="btn btn-primary btn-search">Search</button>
+                        </form>
+                        <ul class="food-list search-results-list" style="margin-top: 20px;">
+                            {% for food in available_foods %}
+                            <li class="food-item">
+                                <span>{{ food.name }}</span>
+                                <span class="nutrient-info">
+                                    {{ "%.1f"|format(food.calories) }} cal, {{ "%.1f"|format(food.protein) }}g P, {{ "%.1f"|format(food.fat) }}g F
+                                </span>
+                                <div class="add-to-meal-buttons">
+                                    <form action="/food-tracking/add" method="POST" style="display:inline;">
+                                        <input type="hidden" name="food_id" value="{{ food.id }}">
+                                        <input type="hidden" name="meal_type" value="Breakfast">
+                                        <button type="submit" class="btn btn-secondary btn-sm">B</button>
+                                    </form>
+                                    <form action="{{ url_for('food_tracking.add_food_log') }}" method="POST" style="display:inline;">
+                                        <input type="hidden" name="food_id" value="{{ food.id }}">
+                                        <input type="hidden" name="meal_type" value="Lunch">
+                                        <button type="submit" class="btn btn-secondary btn-sm">L</button>
+                                    </form>
+                                    <form action="{{ url_for('food_tracking.add_food_log') }}" method="POST" style="display:inline;">
+                                        <input type="hidden" name="food_id" value="{{ food.id }}">
+                                        <input type="hidden" name="meal_type" value="Dinner">
+                                        <button type="submit" class="btn btn-secondary btn-sm">D</button>
+                                    </form>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col about">
+                    <a href="#" class="logo">Fit<strong>Zenith</strong></a>
+                    <p>The operating system for serious fitness professionals and their clients.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Programs</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Updates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Acceptable Use</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FitZenith. All Rights Reserved. Badhon Nandi.</p>
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marathon Events - FitZenith</title>
-    <link rel="stylesheet" href="../static/css/style.css">
+    <title>All Courses - FitZenith</title>
+    <link rel="stylesheet" href=../static/css/style.css>
     <link rel="stylesheet" href="../static/css/marathon.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,14 +18,19 @@
             <a href="{{ '/' }}" class="logo">Fit<strong>Zenith</strong></a>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="{{ '/marathons/list' }}" class="active">Marathons</a></li>
-                    <li><a href="{{ '/' }}#features">Features</a></li>
-                    <li><a href="{{ '/' }}#programs">Programs</a></li>
+                    <li><a href='{{/course/all}}' class="active">Courses</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#programs">Programs</a></li>
                 </ul>
             </nav>
             <div class="header-buttons">
+                {% if 'user_id' in session %}
                 <a href="/profile/view" class="btn btn-secondary">Profile</a>
                 <a href="/logout" class="btn btn-primary">Logout</a>
+                {% else %}
+                <a href="'/login'" class="btn btn-secondary">Login</a>
+                <a href="/register" class="btn btn-primary">Get Started</a>
+                {% endif %}
             </div>
         </div>
     </header>
@@ -34,39 +39,34 @@
         <section id="hero" style="min-height: 50vh;">
             <div class="hero-overlay" style="background: rgba(10,10,10,0.8);"></div>
             <div class="container hero-content">
-                <h1 class="hero-title">Upcoming <span class="gradient-text">Marathons</span></h1>
-                <p class="hero-subtitle">Find your next challenge from our curated list of upcoming races.</p>
+                <h1 class="hero-title">Browse <span class="gradient-text">Courses</span></h1>
+                <p class="hero-subtitle">Find the perfect fitness plan for your goals.</p>
             </div>
         </section>
 
         <section id="programs" class="marathon-page-section">
             <div class="container">
-                
                 <div class="programs-grid">
-                    {% for marathon in marathons %}
-                    <a href="{{ url_for('marathon.marathonDetails', marathon_id=marathon.id) }}" class="program-card">
-                        <img src="https://aims-worldrunning.org/system/articles/images/000/001/586/large/image.png">
-                        <div class="program-overlay">
-                            <h3>{{ marathon.title }}</h3>
-                            <p><i class="fas fa-calendar-alt"></i> {{ marathon.date.strftime('%B %d, %Y') }}</p>
-                            <p><i class="fas fa-map-marker-alt"></i> {{ marathon.location }}</p>
-                            <span class="program-link">View Details <i class="fas fa-arrow-right"></i></span>
-                        </div>
-                    </a>
+                    {% for course in courses %}
+                    <div class="program-card">
+                        <a href="{{ url_for('course.course_details', course_id=course.id) }}">
+                            <img src="https://www.mypthub.net/wp-content/uploads/man-laptop-and-bodybuilder-online-class-in-gym-fo-2023-11-27-05-34-01-utc-1024x683.jpg">
+                            <div class="program-overlay">
+                                <h3>{{ course.title }}</h3>
+                                <p><i class="fas fa-clock"></i> {{ course.duration }}</p>
+                                <p><i class="fas fa-dollar-sign"></i> ${{ "%.2f"|format(course.price) }}</p>
+                                <span class="program-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                
+                            </div>
+                        </a>
+
+                    </div>
                     {% else %}
                     <div style="grid-column: 1 / -1; text-align: center;">
-                        <p class="section-subtitle">No upcoming marathons at the moment. Please check back soon!</p>
+                        <p class="section-subtitle">No courses available at the moment. Please check back soon!</p>
                     </div>
                     {% endfor %}
-
                 </div>
-            </div>
-            <div class="container">
-
-                {% if session.get('role') == 'admin' %}
-                    <a href="{{ url_for('marathon.createMarathon') }}" class="btn btn-primary">Create New Marathon</a>
-
-                {% endif %}
             </div>
         </section>
     </main>
@@ -87,8 +87,8 @@
                 <div class="footer-col">
                     <h4>Product</h4>
                     <ul>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Programs</a></li>
                         <li><a href="#">Pricing</a></li>
                         <li><a href="#">Updates</a></li>
                     </ul>
@@ -116,6 +116,7 @@
             </div>
         </div>
     </footer>
-
+    
+      <script src="../static/js/script.js"></script>
 </body>
 </html>

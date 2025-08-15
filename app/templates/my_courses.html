@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses - FitZenith</title>
+    <link rel="stylesheet" href=../static/css/style.css>
+    <link rel="stylesheet" href="../static/css/marathon.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header id="main-header">
+        <div class="container">
+            <a href="#" class="logo">Fit<strong>Zenith</strong></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#programs">Programs</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                </ul>
+            </nav>
+            <div class="header-buttons">
+                <a href="/logout" class="btn btn-secondary">Logout</a>
+            </div>
+            <button id="mobile-menu-toggle" class="mobile-menu-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" style="min-height: 50vh;">
+            <div class="hero-overlay" style="background: rgba(10,10,10,0.8);"></div>
+            <div class="container hero-content">
+                <h1 class="hero-title">My <span class="gradient-text">Courses</span></h1>
+                <p class="hero-subtitle">Your enrolled courses and materials.</p>
+            </div>
+        </section>
+
+        <section id="programs" class="marathon-page-section">
+            <div class="container">
+                <div class="programs-grid">
+                    {% for course in enrolled_courses %}
+                    <a href="{{ url_for('course.course_details', course_id=course.id) }}" class="program-card">
+                        <img src="https://www.mypthub.net/wp-content/uploads/man-laptop-and-bodybuilder-online-class-in-gym-fo-2023-11-27-05-34-01-utc-1024x683.jpg">
+                        <div class="program-overlay">
+                            <h3>{{ course.title }}</h3>
+                            <p><i class="fas fa-clock"></i> {{ course.duration }}</p>
+                            <p><i class="fas fa-user-circle"></i> {{ course.instructor.name }}</p>
+                            <span class="program-link">View Materials <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div style="grid-column: 1 / -1; text-align: center;">
+                        <p class="section-subtitle">Ekhono kono course tui kinis nai</p>
+                        <a href="/courses/all" class="btn btn-primary">Browse Courses</a>
+
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+          <div class="footer-grid">
+            <div class="footer-col about">
+              <a href="#" class="logo">Fit<strong>Zenith</strong></a>
+              <p>The operating system for serious fitness professionals and their clients.</p>
+              <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              </div>
+            </div>
+            <div class="footer-col">
+              <h4>Product</h4>
+              <ul>
+                <li><a href="#">Features</a></li>
+                <li><a href="#">Programs</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Updates</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Company</h4>
+              <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Legal</h4>
+              <ul>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Acceptable Use</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>&copy; 2025 FitZenith. All Rights Reserved. Badhon Nandi.</p>
+            </div>
+        </div>
+    </footer>
+    
+      <script src="../static/js/script.js"></script>
+</body>
+</html>

@@ -44,21 +44,21 @@
 
     <header id="main-header">
         <div class="container">
-            <a href="{{ url_for('main.landing_page') }}" class="logo">Fit<strong>Zenith</strong></a>
+            <a href="{{ '/' }}" class="logo">Fit<strong>Zenith</strong></a>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="{{ url_for('marathon.list_marathons') }}" class="active">Marathons</a></li>
-                    <li><a href="{{ url_for('main.landing_page') }}#features">Features</a></li>
-                    <li><a href="{{ url_for('main.landing_page') }}#programs">Programs</a></li>
+                    <li><a href="{{ '/marathons/list' }}" class="active">Marathons</a></li>
+                    <li><a href="{{ '/' }}#features">Features</a></li>
+                    <li><a href="{{ '/' }}#programs">Programs</a></li>
                 </ul>
             </nav>
             <div class="header-buttons">
                 {% if 'user_id' in session %}
-                <a href="{{ url_for('main.view_profile') }}" class="btn btn-secondary">Profile</a>
-                <a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Logout</a>
+                <a href="/profile/view" class="btn btn-secondary">Profile</a>
+                <a href="/logout" class="btn btn-primary">Logout</a>
                 {% else %}
-                <a href="{{ url_for('auth.login') }}" class="btn btn-secondary">Login</a>
-                <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Get Started</a>
+                <a href="'/login'" class="btn btn-secondary">Login</a>
+                <a href="/register" class="btn btn-primary">Get Started</a>
                 {% endif %}
             </div>
         </div>
@@ -118,7 +118,7 @@
                             </form>
                             {% endif %}
                             {% else %}
-                            <a href="{{ url_for('auth.login') }}" class="btn btn-primary">Login to Register</a>
+                            <a href="'/login'" class="btn btn-primary">Login to Register</a>
                             {% endif %}
                     </div>
                 </div>

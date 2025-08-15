@@ -12,7 +12,7 @@ def list_marathons():
 @marathon_bp.route('/create', methods=['GET', 'POST'])
 def createMarathon():
     if session.get('role') != 'admin':
-        return redirect(url_for('marathon.list_marathons'))
+        return redirect('/marathons/list')
 
     if request.method == 'POST':
         new_marathon, error = Marathon.create(request.form)
@@ -20,7 +20,7 @@ def createMarathon():
             flash(f'Error creating event: {error}', 'error')
         else:
             flash(f'Marathon event "{new_marathon["title"]}" created successfully!', 'success')
-        return redirect(url_for('marathon.list_marathons'))
+        return redirect('/marathons/list')
     
     return render_template('create.html')
 
@@ -28,7 +28,7 @@ def createMarathon():
 def deleteMarathon(marathon_id):
     if session.get('role') != 'admin':
         flash('You do not have permission to delete marathons.', 'error')
-        return redirect(url_for('marathon.list_marathons'))
+        return redirect('/marathons/list')
 
     marathon = Marathon.get_by_id(marathon_id)
 
@@ -36,7 +36,7 @@ def deleteMarathon(marathon_id):
         Marathon.delete_by_id(marathon_id)
         flash(f"Marathon \"{marathon['title']}\" deleted successfully!", 'success')
 
-    return redirect(url_for('marathon.list_marathons'))
+    return redirect('/marathons/list')
 
 @marathon_bp.route('/<int:marathon_id>')
 def marathonDetails(marathon_id):
@@ -64,4 +64,4 @@ def register_for_marathon(marathon_id):
     else:
         flash(message, 'error')
         
-    return redirect(url_for('marathon.marathonDetails', marathon_id=marathon_id))
+    return redirect(f'/marathons/{marathon_id}')

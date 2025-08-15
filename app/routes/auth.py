@@ -24,7 +24,7 @@ def login():
             session['user_email'] = user.email
             session['role'] = user.role  
 
-            return redirect(url_for('main.afterlogin_page'))
+            return redirect('/afterlogin')
         else:
             return "<h1>Login Failed. Check your email and password.</h1>"
 
@@ -32,7 +32,6 @@ def login():
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
-    """Handle user registration"""
     if request.method == 'POST':
 
         name = request.form.get('username')
@@ -49,11 +48,11 @@ def register():
         new_user = User(name=name, email=email, password=password)
         new_user.save()
 
-        return redirect(url_for('main.landing_page')) 
+        return redirect('/') 
         
     return render_template("login_reg.html")
 
 @auth_bp.route('/logout')
 def logout():
-    """Logout page route"""
-    return render_template('index.html')
+    session.clear()
+    return redirect('/login')

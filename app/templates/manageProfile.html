@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Profile - FitZenith</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href=../static/css/style.css>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/manageProfile.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,18 +18,18 @@
 
     <header id="main-header">
         <div class="container">
-            <a href="{{ url_for('main.landing_page') }}" class="logo">Fit<strong>Zenith</strong></a>
+            <a href="{{ '/' }}" class="logo">Fit<strong>Zenith</strong></a>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="{{ url_for('main.landing_page') }}#features">Features</a></li>
-                    <li><a href="{{ url_for('main.landing_page') }}#how-it-works">How It Works</a></li>
-                    <li><a href="{{ url_for('main.landing_page') }}#programs">Programs</a></li>
-                    <li><a href="{{ url_for('main.landing_page') }}#testimonials">Testimonials</a></li>
+                    <li><a href="{{ '/' }}#features">Features</a></li>
+                    <li><a href="{{ '/' }}#how-it-works">How It Works</a></li>
+                    <li><a href="{{ '/' }}#programs">Programs</a></li>
+                    <li><a href="{{ '/' }}#testimonials">Testimonials</a></li>
                 </ul>
             </nav>
             <div class="header-buttons">
-                <a href="{{ url_for('main.view_profile') }}" class="btn btn-secondary">My Profile</a>
-                <a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Logout</a>
+                <a href="/profile/view" class="btn btn-secondary">My Profile</a>
+                <a href="/logout" class="btn btn-primary">Logout</a>
             </div>
             <button id="mobile-menu-toggle" class="mobile-menu-toggle">
                 <span class="bar"></span>
@@ -40,12 +40,12 @@
     </header>
     <div id="mobile-menu" class="mobile-nav">
         <ul>
-            <li><a href="{{ url_for('main.landing_page') }}#features">Features</a></li>
-            <li><a href="{{ url_for('main.landing_page') }}#how-it-works">How It Works</a></li>
-            <li><a href="{{ url_for('main.landing_page') }}#programs">Programs</a></li>
-            <li><a href="{{ url_for('main.landing_page') }}#testimonials">Testimonials</a></li>
-            <li class="mobile-buttons"><a href="{{ url_for('main.view_profile') }}" class="btn btn-secondary">My Profile</a></li>
-            <li class="mobile-buttons"><a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Logout</a></li>
+            <li><a href="{{ '/' }}#features">Features</a></li>
+            <li><a href="{{ '/' }}#how-it-works">How It Works</a></li>
+            <li><a href="{{ '/' }}#programs">Programs</a></li>
+            <li><a href="{{ '/' }}#testimonials">Testimonials</a></li>
+            <li class="mobile-buttons"><a href="/profile/view" class="btn btn-secondary">My Profile</a></li>
+            <li class="mobile-buttons"><a href="/logout" class="btn btn-primary">Logout</a></li>
         </ul>
     </div>
 
@@ -123,7 +123,7 @@
                     </div>
 
                     <div class="form-buttons">
-                        <a href="{{ url_for('main.view_profile') }}" class="btn btn-secondary">Cancel</a>
+                        <a href="/profile/view" class="btn btn-secondary">Cancel</a>
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
                 </form>

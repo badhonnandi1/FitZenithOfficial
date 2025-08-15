@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ course.title }} - FitZenith</title>
+    <link rel="stylesheet" href=../static/css/style.css>
+    <link rel="stylesheet" href="../static/css/marathon.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body>
+
+    <header id="main-header">
+        <div class="container">
+            <a href="{{ '/' }}" class="logo">Fit<strong>Zenith</strong></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href='/course/all' class="active">Courses</a></li>
+                    <li><a href="/">Features</a></li>
+                    <li><a href="/">Programs</a></li>
+                </ul>
+            </nav>
+            <div class="header-buttons">
+                {% if 'user_id' in session %}
+                <a href="" class="btn btn-secondary">Profile</a>
+                <a href="/logout" class="btn btn-primary">Logout</a>
+                {% else %}
+                <a href="'/login'" class="btn btn-secondary">Login</a>
+                <a href="/register" class="btn btn-primary">Get Started</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="features" style="padding-top: 100px;">
+            <div class="container">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <div style="max-width: 800px; margin: 0 auto 40px;">
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+                <div class="marathon-detail-card">
+                    <div class="marathon-detail-image">
+                        <img src="https://www.mypthub.net/wp-content/uploads/man-laptop-and-bodybuilder-online-class-in-gym-fo-2023-11-27-05-34-01-utc-1024x683.jpg"
+                            alt="{{ course.title }}">
+                    </div>
+                    <div class="marathon-detail-content">
+                        <h2 class="section-title" style="text-align: left;">{{ course.title }}</h2>
+                        <div class="marathon-meta-info">
+                            <span><i class="fas fa-user-circle"></i> Instructor: {{ course.instructor.name }}</span>
+                            <span><i class="fas fa-clock"></i> Duration: {{ course.duration }}</span>
+                            <span><i class="fas fa-dollar-sign"></i> Price: ${{ "%.2f"|format(course.price) }}</span>
+                        </div>
+                        <p class="marathon-description">{{ course.description }}</p>
+                        <h3 class="card-title">Course Materials</h3>
+                        <p>{{ course.materials }}</p>
+
+                        {% if 'user_id' in session %}
+                        {% if is_enrolled %}
+                        <button class="btn btn-secondary" disabled>Already Enrolled</button>
+                        {% else %}
+                        <form action="{{ url_for('course.enroll_course', course_id=course.id) }}" method="POST">
+                            <button type="submit" class="btn btn-primary">Enroll Now</button>
+                        </form>
+                        {% endif %}
+                        {% else %}
+                        <a href="'/login'" class="btn btn-primary">Login to Enroll</a>
+                        {% endif %}
+
+                        {% if session.get('role') == 'admin' or session.get('user_id') == course.instructor_id %}
+                        <form action="/courses/{{ course.id }}/delete" method="POST" style="margin-top: 20px;">
+                            <button type="submit" class="btn btn-primary" >Delete Course</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col about">
+                    <a href="#" class="logo">Fit<strong>Zenith</strong></a>
+                    <p>The operating system for serious fitness professionals and their clients.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Programs</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Updates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Acceptable Use</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FitZenith. All Rights Reserved. Badhon Nandi.</p>
+            </div>
+        </div>
+    </footer>
+
+    </body>
+
+</html>

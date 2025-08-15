@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard | FitZenith</title>
-  <link rel="stylesheet" href="../static/css/style.css" />
+  <link rel="stylesheet" href="../static/css/style.css"/>
+  <link rel="stylesheet" href="../static/css/afterindex.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
 <body>
@@ -51,6 +52,12 @@
 
       <div class="features-grid">
 
+        <a href="{{ url_for('food_tracking.food_tracking_page') }}" class="feature-card">
+          <div class="card-icon"><i class="fas fa-apple-alt"></i></div>
+          <h3>Track Your Food</h3>
+          <p>Log meals and monitor your daily calorie and nutrient intake.</p>
+        </a>
+
         <a href="/marathons/list" class="feature-card">
           <div class="card-icon"><i class="fas fa-user-plus"></i></div>
           <h3>View Upcoming Marathons</h3>
@@ -61,27 +68,43 @@
           <h3>Workout Plan</h3>
           <p>Upload and organize custom workout routines.</p>
         </a>
-        <a href="/create-meal-plan" class="feature-card">
+        <a href="/food-tracking" class="feature-card">
           <div class="card-icon"><i class="fas fa-apple-alt"></i></div>
-          <h3>Meal Plan</h3>
-          <p>Create and distribute diet plans for trainees.</p>
+          <h3>Food Tracking</h3>
+          <p>Log meals and monitor your daily calorie and nutrient intake.</p>
         </a>
 
-        <a href="/progress-tracking" class="feature-card">
-          <div class="card-icon"><i class="fas fa-chart-line"></i></div>
-          <h3>My Progress & Stats</h3>
-          <p>Track body stats, progress photos and milestones.</p>
+        <a href='/course/all' class="feature-card">
+          <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
+          <h3>Browse Courses</h3>
+          <p>Explore and enroll in fitness courses from instructors.</p>
         </a>
-        <a href="/announcements" class="feature-card">
-          <div class="card-icon"><i class="fas fa-bullhorn"></i></div>
-          <h3>Announcements</h3>
-          <p>Post important updates or notifications to users.</p>
+        
+        <a href="{{ url_for('course.my_courses') }}" class="feature-card">
+          <div class="card-icon"><i class="fas fa-book"></i></div>
+          <h3>My Courses</h3>
+          <p>View all the courses you have enrolled in.</p>
         </a>
-        <a href="/leaderboard" class="feature-card">
-          <div class="card-icon"><i class="fas fa-trophy"></i></div>
-          <h3>Leaderboard</h3>
-          <p>View rankings based on goals, programs or challenges.</p>
-        </a>
+
+        {% if session.get('role') == 'admin' %}
+          <a href="/admin/applications" class="feature-card">
+            <div class="card-icon"><i class="fas fa-file-alt"></i></div>
+            <h3>View Applications</h3>
+            <p>Review and manage instructor applications.</p>
+          </a>
+        {% elif session.get('role') == 'instructor' %}
+          <a href="{{ url_for('course.create_course') }}" class="feature-card">
+            <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+            <h3>Create Course</h3>
+            <p>Design and publish new fitness courses for trainees.</p>
+          </a>
+        {% else %}
+          <a href="/apply" class="feature-card">
+            <div class="card-icon"><i class="fas fa-user-plus"></i></div>
+            <h3>Apply as Instructor</h3>
+            <p>Submit your application to become an instructor.</p>
+          </a>
+        {% endif %}
       </div>
     </div>
     <section id="how-it-works">
