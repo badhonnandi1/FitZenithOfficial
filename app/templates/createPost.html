@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Post - FitZenith</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/manageProfile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header id="main-header">
+        <div class="container">
+            <a href="/" class="logo">Fit<strong>Zenith</strong></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#" class="active">Community</a></li>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#"></a></li>
+                </ul>
+            </nav>
+            <div class="header-buttons">
+                {% if 'user_id' in session %}
+                <a href="/profile/view" class="btn btn-secondary">Profile</a>
+                <a href="/logout" class="btn btn-primary">Logout</a>
+                {% else %}
+                <a href="{{ url_for('auth.login') }}" class="btn btn-secondary">Login</a>
+                <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Get Started</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    
+    <section id="update-profile-section">
+        <div class="container">
+            <div class="update-form-container">
+                <div class="form-header">
+                    <h1 class="section-title">Prosno bolen</h1>
+                    <p class="section-subtitle">Share your thoughts and questions with the community.</p>
+                </div>
+                <form action="/community/postcreate" method="POST" class="update-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="title">Post Title</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-heading"></i>
+                            <input type="text" id="title" name="title" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="content">Post Content</label>
+                        <textarea id="content" name="content" rows="8" placeholder="kichu ekta lekho vai" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--dark-bg); color: var(--text-primary);" required></textarea>
+                    </div>
+                    <div class="form-buttons">
+                        <a href="/" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Publish Post</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+          <div class="footer-grid">
+            <div class="footer-col about">
+              <a href="#" class="logo">Fit<strong>Zenith</strong></a>
+              <p>The operating system for serious fitness professionals and their clients.</p>
+              <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              </div>
+            </div>
+            <div class="footer-col">
+              <h4>Product</h4>
+              <ul>
+                <li><a href="#">Features</a></li>
+                <li><a href="#"></a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Updates</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Company</h4>
+              <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Legal</h4>
+              <ul>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Acceptable Use</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>&copy; 2025 FitZenith. All Rights Reserved. Badhon Nandi.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -16,21 +16,24 @@ def create_app():
     from app.routes.marathon import marathon_bp
     from app.routes.instructorRou import instructor_bp
     from app.routes.course import course_bp
-    from app.routes.foodTracking import food_tracking_bp # Add this line
+    from app.routes.foodTracking import food_tracking_bp 
+    from app.routes.community import community_bp 
+    from app.models.community import Post, Comment
 
-    app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(main_bp)
     app.register_blueprint(marathon_bp)
     app.register_blueprint(instructor_bp)
     app.register_blueprint(course_bp)
-    app.register_blueprint(food_tracking_bp) # Add this line
-
+    app.register_blueprint(food_tracking_bp)
+    app.register_blueprint(community_bp)
+    
     with app.app_context():
         from app.models.user import User
         from app.models.marathon import Marathon, MarathonRegistration
         from app.models.instructorApplication import InstructorApplication
         from app.models.course import Course, CourseEnrollment
-        from app.models.foodTracking import Food, FoodLog # Add this line
+        from app.models.foodTracking import Food, FoodLog 
         db.create_all()
 
         # Add sample food data

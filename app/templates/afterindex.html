@@ -6,6 +6,7 @@
   <title>Dashboard | FitZenith</title>
   <link rel="stylesheet" href="../static/css/style.css"/>
   <link rel="stylesheet" href="../static/css/afterindex.css"/>
+  <link rel="stylesheet" href="../static/css/postlisting.css" class="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
 <body>
@@ -16,7 +17,7 @@
       <nav class="main-nav">
         <ul>
           <li><a href="">Dashboard</a></li>
-          <li><a href="#">Programs</a></li>
+          <li><a href="#"></a></li>
           <li><a href="#">Support</a></li>
         </ul>
       </nav>
@@ -36,7 +37,7 @@
   <div id="mobile-menu" class="mobile-nav">
     <ul>
       <li><a href="#">Dashboard</a></li>
-      <li><a href="#">Programs</a></li>
+      <li><a href="#"></a></li>
       <li><a href="#">Support</a></li>
       <li class="mobile-buttons"><a href="/logout" class="btn btn-secondary">Logout</a></li>
     </ul>
@@ -107,7 +108,22 @@
         {% endif %}
       </div>
     </div>
-    <section id="how-it-works">
+    <section style="padding-top: 140px;">
+      <div class="container">
+          <div class="section-header">
+              <h1 class="section-title">Community Forum</h1>
+              <p class="section-subtitle">Share your progress, ask questions, and connect with other members.</p>
+              {% if 'user_id' in session %}
+              <a href="/community/createpost" class="btn btn-primary" style="margin-top: 20px;">Create a New Post</a>
+              {% endif %}
+              <a href="/community" class="btn btn-primary" style="margin-top: 20px;">View Existing posts</a>
+
+          </div>
+
+        </div>
+      </div>
+  </section>
+    <section id="">
         <div class="container" data-scroll-fade>
             <div class="section-header">
                 <h2 class="section-title">Achieve Results in 3 Steps</h2>
@@ -157,7 +173,7 @@
           <h4>Product</h4>
           <ul>
             <li><a href="#">Features</a></li>
-            <li><a href="#">Programs</a></li>
+            <li><a href="#"></a></li>
             <li><a href="#">Pricing</a></li>
             <li><a href="#">Updates</a></li>
           </ul>

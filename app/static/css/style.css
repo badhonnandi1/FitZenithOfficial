@@ -309,7 +309,7 @@ section {
 }
 
 
-#features {
+# {
     background-color: var(--dark-bg);
 }
 
@@ -359,7 +359,7 @@ section {
     color: var(--text-secondary);
 }
 
-#how-it-works {
+# {
     background-color: var(--bg-color);
 }
 
@@ -454,11 +454,11 @@ section {
     color: var(--text-secondary);
 }
 
-#programs {
+# {
     background-color: var(--dark-bg);
 }
 
-.programs-grid {
+.-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
@@ -524,7 +524,7 @@ section {
     transform: translateX(5px);
 }
 
-#testimonials {
+# {
     background-color: var(--bg-color);
 }
 

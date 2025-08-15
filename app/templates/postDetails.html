@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }} - FitZenith</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .post-container {
+            background: var(--surface-color);
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+        }
+        .post-details-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .post-details-meta {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        .post-details-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+        .comments-section h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .comment-item {
+            background: var(--bg-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .comment-meta {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        .comment-content {
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <header id="main-header">
+        <div class="container">
+            <a href="/" class="logo">Fit<strong>Zenith</strong></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{{ url_for('community.list_posts') }}" class="active">Community</a></li>
+                    <li><a href="/#">Features</a></li>
+                    <li><a href="/#"></a></li>
+                </ul>
+            </nav>
+            <div class="header-buttons">
+                {% if 'user_id' in session %}
+                <a href="{{ url_for('main.view_profile') }}" class="btn btn-secondary">Profile</a>
+                <a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Logout</a>
+                {% else %}
+                <a href="{{ url_for('auth.login') }}" class="btn btn-secondary">Login</a>
+                <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Get Started</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main style="padding-top: 140px;">
+        <section>
+            <div class="container" style="max-width: 900px;">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <div style="max-width: 800px; margin: 0 auto 40px;">
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+                <div class="post-container">
+                    <div class="post-details-header">
+                        <h1>{{ post.title }}</h1>
+                        <p class="post-details-meta">By {{ post.user.name }} on {{ post.created_at.strftime('%B %d, %Y at %I:%M %p') }}</p>
+                    </div>
+                    <div class="post-details-content">
+                        <p>{{ post.content }}</p>
+                    </div>
+
+                    <div class="comments-section">
+                        <h2>Comments ({{ post.comments|length }})</h2>
+                        {% for comment in post.comments | sort(attribute='created_at') %}
+                        <div class="comment-item">
+                            <p class="comment-meta">By {{ comment.user.name }} at {{ comment.created_at.strftime('%I:%M %p') }}</p>
+                            <p class="comment-content">{{ comment.content }}</p>
+                        </div>
+                        {% else %}
+                        <p class="section-subtitle">No comments yet. Be the first to comment!</p>
+                        {% endfor %}
+                    </div>
+                    
+                    {% if 'user_id' in session %}
+                    <div class="add-comment-form" style="margin-top: 30px;">
+                        <h3 style="margin-bottom: 15px;">Leave a Comment</h3>
+                        <form action="{{ url_for('community.add_comment', post_id=post.id) }}" method="POST">
+                            <textarea name="content" rows="4" placeholder="Write your comment here..." style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--dark-bg); color: var(--text-primary); margin-bottom: 10px;"></textarea>
+                            <button type="submit" class="btn btn-primary">Submit Comment</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+          <div class="footer-grid">
+            <div class="footer-col about">
+              <a href="#" class="logo">Fit<strong>Zenith</strong></a>
+              <p>The operating system for serious fitness professionals and their clients.</p>
+              <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              </div>
+            </div>
+            <div class="footer-col">
+              <h4>Product</h4>
+              <ul>
+                <li><a href="#">Features</a></li>
+                <li><a href="#"></a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Updates</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Company</h4>
+              <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Legal</h4>
+              <ul>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Acceptable Use</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>&copy; 2025 FitZenith. All Rights Reserved. Badhon Nandi.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

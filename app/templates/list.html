@@ -15,12 +15,12 @@
 
     <header id="main-header">
         <div class="container">
-            <a href="{{ '/' }}" class="logo">Fit<strong>Zenith</strong></a>
+            <a href="{{ / }}" class="logo">Fit<strong>Zenith</strong></a>
             <nav class="main-nav">
                 <ul>
                     <li><a href="{{ '/marathons/list' }}" class="active">Marathons</a></li>
-                    <li><a href="{{ '/' }}#features">Features</a></li>
-                    <li><a href="{{ '/' }}#programs">Programs</a></li>
+                    <li><a href="{{ / }}#">Features</a></li>
+                    <li><a href="{{ / }}#"></a></li>
                 </ul>
             </nav>
             <div class="header-buttons">
@@ -39,10 +39,10 @@
             </div>
         </section>
 
-        <section id="programs" class="marathon-page-section">
+        <section id="" class="marathon-page-section">
             <div class="container">
                 
-                <div class="programs-grid">
+                <div class="-grid">
                     {% for marathon in marathons %}
                     <a href="{{ url_for('marathon.marathonDetails', marathon_id=marathon.id) }}" class="program-card">
                         <img src="https://aims-worldrunning.org/system/articles/images/000/001/586/large/image.png">
@@ -87,8 +87,8 @@
                 <div class="footer-col">
                     <h4>Product</h4>
                     <ul>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#"></a></li>
                         <li><a href="#">Pricing</a></li>
                         <li><a href="#">Updates</a></li>
                     </ul>

@@ -58,7 +58,7 @@ def my_courses():
     user = User.query.get(session['user_id'])
     enrolled_courses = [enrollment.course for enrollment in user.course_enrollments]
 
-    return render_template('my_courses.html', enrolled_courses=enrolled_courses)
+    return render_template('myCourses.html', enrolled_courses=enrolled_courses)
 
 
 @course_bp.route('/courses/<int:course_id>/delete', methods=['POST'])

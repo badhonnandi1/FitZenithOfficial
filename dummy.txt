@@ -1,0 +1,104 @@
+CREATE DATABASE fitzenith;
+USE fitzenith;
+
+-- Users Table
+CREATE TABLE user (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    password VARCHAR(200) NOT NULL,
+    phone VARCHAR(15),
+    profile_pic VARCHAR(300) DEFAULT 'static/uploads/profile_pics/default.jpg',
+    role ENUM('user', 'admin', 'instructor') DEFAULT 'user',
+    dateOfBirth DATE DEFAULT '2000-01-01',
+    weight FLOAT DEFAULT 0.0,
+    height FLOAT DEFAULT 0.0,
+    goal VARCHAR(100) DEFAULT 'No specific',
+    bmi FLOAT DEFAULT 0.0,
+    bmr FLOAT DEFAULT 0.0,
+    maintenance_calories FLOAT DEFAULT 0.0
+);
+
+-- Fitness 
+CREATE TABLE fitness_program (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    duration INT
+);
+
+-- Enrollment (User ↔ FitnessProgram)
+CREATE TABLE enrollment (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    program_id INT NOT NULL,
+    start_date DATE,
+    status VARCHAR(50),
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (program_id) REFERENCES fitness_program(id) ON DELETE CASCADE
+);
+
+-- Workout Plans
+CREATE TABLE workout_plan (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    program_id INT NOT NULL,
+    exercises TEXT,
+    sets INT,
+    reps INT,
+    FOREIGN KEY (program_id) REFERENCES fitness_program(id) ON DELETE CASCADE
+);
+
+-- Meal Plans
+CREATE TABLE meal_plan (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    program_id INT NOT NULL,
+    meals TEXT,
+    nutrition_info TEXT,
+    FOREIGN KEY (program_id) REFERENCES fitness_program(id) ON DELETE CASCADE
+);
+
+-- Fitness Resources
+CREATE TABLE fitness_resource (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    program_id INT NOT NULL,
+    type VARCHAR(50),
+    content TEXT,
+    FOREIGN KEY (program_id) REFERENCES fitness_program(id) ON DELETE CASCADE
+);
+
+-- Announcements
+CREATE TABLE announcement (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    message TEXT,
+    date DATE
+);
+
+-- Leaderboard (based on Enrollment progress)
+CREATE TABLE leaderboard (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    score INT DEFAULT 0,
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
+);
+
+-- Marathons
+CREATE TABLE marathon (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(150) NOT NULL,
+    date DATETIME NOT NULL,
+    location VARCHAR(150) NOT NULL,
+    price FLOAT DEFAULT 0.0,
+    slots INT NOT NULL,
+    description TEXT,
+    image_path VARCHAR(300) DEFAULT 'images/default_marathon.jpg'
+);
+
+-- Marathon Registrations
+CREATE TABLE marathon_registration (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    registration_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    user_id INT NOT NULL,
+    marathon_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (marathon_id) REFERENCES marathon(id) ON DELETE CASCADE
+);

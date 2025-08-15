@@ -23,7 +23,7 @@ The main goal of FitZenith is to **enhance the effectiveness of fitness training
 
 ### Target Users:
 
-- **Admins**: Manage users, programs, and create/delete events.
+- **Admins**: Manage users, , and create/delete events.
 - **Instructors**: Guide trainees, assign workouts, and upload resources.
 - **Trainees (Normal Users)**: Follow customized fitness plans, track metrics (BMI, BMR), and register for fitness events.
 

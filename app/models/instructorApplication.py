@@ -1,7 +1,8 @@
 from app import db
 from datetime import datetime
 from sqlalchemy import text
-from app.models.user import User  # Needed to update the user role
+from app.models.user import User 
+
 
 class InstructorApplication(db.Model):
     id = db.Column(db.Integer, primary_key=True)
