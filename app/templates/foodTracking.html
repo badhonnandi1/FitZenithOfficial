@@ -27,12 +27,12 @@
 
     <header id="main-header">
         <div class="container">
-            <a href="{{ / }}" class="logo">Fit<strong>Zenith</strong></a>
+            <a href="/" class="logo">Fit<strong>Zenith</strong></a>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="{{ url_for('food_tracking.food_tracking_page') }}" class="active">Food Tracking</a></li>
-                    <li><a href="{{ / }}#">Features</a></li>
-                    <li><a href="{{ / }}#"></a></li>
+                    <li><a href="/food-tracking" class="active">Food Tracking</a></li>
+                    <li><a href="/">Features</a></li>
+
                 </ul>
             </nav>
             <div class="header-buttons">
@@ -52,7 +52,7 @@
             <div class="container">
                 <div class="section-header">
                     <h1 class="section-title"><span class="gradient-text">Khabar Add koro</span></h1>
-                    <p class="section-subtitle">Keep track of your food</p>
+                    <p class="section-subtitle">Suggestion: Eat Natural Food, Not Processed</p>
                 </div>
                 
                 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -117,9 +117,9 @@
                                     <form action="/food-tracking/add" method="POST" style="display:inline;">
                                         <input type="hidden" name="food_id" value="{{ food.id }}">
                                         <input type="hidden" name="meal_type" value="Breakfast">
-                                        <button type="submit" class="btn btn-secondary btn-sm">B</button>
+                                        <button type="submit" class="btn btn-secondary btn-sm">Add koren</button>
                                     </form>
-                                    <form action="{{ url_for('food_tracking.add_food_log') }}" method="POST" style="display:inline;">
+                                    <!-- <form action="{{ url_for('food_tracking.add_food_log') }}" method="POST" style="display:inline;">
                                         <input type="hidden" name="food_id" value="{{ food.id }}">
                                         <input type="hidden" name="meal_type" value="Lunch">
                                         <button type="submit" class="btn btn-secondary btn-sm">L</button>
@@ -127,7 +127,7 @@
                                     <form action="{{ url_for('food_tracking.add_food_log') }}" method="POST" style="display:inline;">
                                         <input type="hidden" name="food_id" value="{{ food.id }}">
                                         <input type="hidden" name="meal_type" value="Dinner">
-                                        <button type="submit" class="btn btn-secondary btn-sm">D</button>
+                                        <button type="submit" class="btn btn-secondary btn-sm">D</button> -->
                                     </form>
                                 </div>
                             </li>

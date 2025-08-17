@@ -27,7 +27,7 @@ def create_app():
     app.register_blueprint(course_bp)
     app.register_blueprint(food_tracking_bp)
     app.register_blueprint(community_bp)
-    
+
     with app.app_context():
         from app.models.user import User
         from app.models.marathon import Marathon, MarathonRegistration
@@ -36,7 +36,7 @@ def create_app():
         from app.models.foodTracking import Food, FoodLog 
         db.create_all()
 
-        # Add sample food data
+
         if not Food.query.first():
             from .utils import load_sample_food_data
             load_sample_food_data()
