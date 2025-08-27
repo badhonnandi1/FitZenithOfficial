@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FitTrack Pro - Your Ultimate Fitness Command Center</title>
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
@@ -232,8 +232,8 @@
             <a href="#" class="btn btn-primary btn-lg">Claim Your Free Trial Now</a>
         </div>
     </section>
-
-
+   <br>
+<br>
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -280,6 +280,6 @@
         </div>
     </footer>
 
-    <script src="../static/js/script.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

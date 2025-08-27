@@ -87,11 +87,6 @@
           <h3>Workout Plan</h3>
           <p>Upload and organize custom workout routines.</p>
         </a>
-        <a href="/food-tracking" class="feature-card">
-          <div class="card-icon"><i class="fas fa-apple-alt"></i></div>
-          <h3>Food Tracking</h3>
-          <p>Log meals and monitor your daily calorie and nutrient intake.</p>
-        </a>
 
         <a href='/courses/all' class="feature-card">
           <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
@@ -99,7 +94,7 @@
           <p>Explore and enroll in fitness courses from instructors.</p>
         </a>
         
-        <a href="{{ url_for('course.my_courses') }}" class="feature-card">
+        <a href="/my-courses" class="feature-card">
           <div class="card-icon"><i class="fas fa-book"></i></div>
           <h3>My Courses</h3>
           <p>View all the courses you have enrolled in.</p>
@@ -112,7 +107,7 @@
             <p>Review and manage instructor applications.</p>
           </a>
         {% elif session.get('role') == 'instructor' %}
-          <a href="{{ url_for('course.create_course') }}" class="feature-card">
+          <a href="/courses/create" class="feature-card">
             <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
             <h3>Create Course</h3>
             <p>Design and publish new fitness courses for trainees.</p>
