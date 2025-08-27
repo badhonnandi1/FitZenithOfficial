@@ -938,3 +938,182 @@ ooter {
     }
 
     
+    Of course! A clean and professional user interface is crucial. I've written the necessary CSS to improve the appearance of the resource management pages, ensuring they match the modern aesthetic of your application.
+
+    Here are the updated files:
+    
+    1. Modified CSS File: app/static/css/style.css
+    I've added new classes and styles to this file to handle the resource list table and the PDF viewer.
+    
+    CSS
+    
+    /* --- (Existing CSS content...) --- */
+    
+    .application-actions .btn {
+        width: auto;
+    }
+    }
+    
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        text-align: center;
+    }
+    
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+    
+    .alert-error {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+    
+    .alert-info {
+        color: #0c5460;
+        background-color: #d1ecf1;
+        border-color: #bee5eb;
+    }
+    
+    /* --- Resource Page Styles (New) --- */
+    #resources-section {
+        padding-top: 140px;
+        padding-bottom: 100px;
+    }
+    
+    .leaderboard-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: var(--surface-color);
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .leaderboard-table th, .leaderboard-table td {
+        padding: 16px 20px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .leaderboard-table th {
+        background-color: rgba(255, 255, 255, 0.05);
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-secondary);
+    }
+    
+    .leaderboard-table tbody tr {
+        transition: background-color 0.3s ease;
+    }
+    
+    .leaderboard-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .leaderboard-table tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.03);
+    }
+    
+    .leaderboard-table td .btn {
+        margin-right: 8px;
+        padding: 6px 14px;
+        font-size: 0.9rem;
+    }
+    
+    .btn-danger {
+        background: #dc3545;
+        color: #fff;
+        border-color: transparent;
+    }
+    
+    .btn-danger:hover {
+        background: #c82333;
+        border-color: transparent;
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(220, 53, 69, 0.2);
+    }
+    
+    /* PDF Viewer Styles (New) */
+    .pdf-viewer-container {
+        padding-top: 140px;
+        padding-bottom: 100px;
+    }
+    
+    .pdf-embed {
+        width: 100%;
+        height: 85vh;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        background-color: var(--surface-color);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .post-container {
+        background: var(--surface-color);
+        border-radius: 16px;
+        padding: 40px;
+        border: 1px solid var(--border-color);
+    }
+    .post-details-header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .post-details-meta {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        margin-bottom: 24px;
+    }
+    .post-details-content {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--text-primary);
+        padding-bottom: 30px;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 30px;
+    }
+    .comments-section h2 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+    .comment-item {
+        background: var(--bg-color);
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 15px;
+    }
+    .comment-meta {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+    }
+    .comment-content {
+        line-height: 1.6;
+    }
+    .notification-popup {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background-color: var(--primary-color);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        z-index: 1001;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    .notification-popup a {
+        color: white;
+        text-decoration: none;
+    }

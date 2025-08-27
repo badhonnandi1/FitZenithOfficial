@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Announcements</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header id="main-header">
+        <div class="container">
+            <a href="/" class="logo">Fit<strong>Zenith</strong></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{{ url_for('course.list_courses') }}">Courses</a></li>
+                    <li><a href="{{ url_for('main.afterlogin_page') }}">Dashboard</a></li>
+                </ul>
+            </nav>
+            <div class="header-buttons">
+                {% if 'user_id' in session %}
+                <a href="{{ url_for('main.view_profile') }}" class="btn btn-secondary">Profile</a>
+                <a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Logout</a>
+                {% else %}
+                <a href="{{ url_for('auth.login') }}" class="btn btn-secondary">Login</a>
+                <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Get Started</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    <main class="main-content" style="padding-top: 140px;">
+        <section id="announcements-section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 class="section-title">Announcements</h1>
+                </div>
+
+                {% if session.get('role') in ['admin', 'instructor'] %}
+                <a href="{{ url_for('announcement.create_announcement') }}" class="btn btn-primary">Create New Announcement</a>
+                {% endif %}
+
+                <div class="announcements-list" style="margin-top: 30px;">
+                    {% for announcement in announcements %}
+                    <div class="announcement-card" style="background: var(--surface-color); border-radius: 12px; padding: 25px; margin-bottom: 20px;">
+                        <h3>{{ announcement.title }}</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9em;">
+                            By {{ announcement.author.name }} on {{ announcement.date_created.strftime('%B %d, %Y') }}
+                        </p>
+                        <p style="margin-top: 15px;">{{ announcement.message }}</p>
+
+                        {% if session.get('role') in ['admin', 'instructor'] and announcement.author_id == session['user_id'] %}
+                        <div style="margin-top: 20px;">
+                            <a href="{{ url_for('announcement.update_announcement', announcement_id=announcement.id) }}" class="btn btn-secondary">Edit</a>
+                            <form action="{{ url_for('announcement.delete_announcement', announcement_id=announcement.id) }}" method="POST" style="display: inline-block; margin-left: 10px;">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col about">
+                    <a href="#" class="logo">Fit<strong>Zenith</strong></a>
+                    <p>The operating system for serious fitness professionals and their clients.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Updates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Acceptable Use</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FitZenith. All Rights Reserved. Badhon Nandi.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

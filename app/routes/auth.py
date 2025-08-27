@@ -17,6 +17,7 @@ def login():
             return "<h1>Error: Email and password are required.</h1>"
 
         user = User.findUser(email)
+        print(user)
 
         if user and user.password == password:
             session['user_id'] = user.id

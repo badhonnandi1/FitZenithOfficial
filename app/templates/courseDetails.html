@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FitZenith</title>
-    <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="../static/css/marathon.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/marathon.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
@@ -66,11 +66,13 @@
                         <h3 class="card-title">Course Materials</h3>
                         <p>{{ course.materials }}</p>
 
+                        <a href="{{ url_for('resource.list_resources', course_id=course.id) }}" class="btn btn-primary">View Resources</a>
+
                         {% if 'user_id' in session %}
                         {% if is_enrolled %}
                         <button class="btn btn-secondary" disabled>Already Enrolled</button>
                         {% else %}
-                        <form action="{{ url_for('course.enroll_course', course_id=course.id) }}" method="POST">
+                        <form action="{{ url_for('course.enroll_course', course_id=course.id) }}" method="POST" style="display: inline-block; margin-left: 10px;">
                             <button type="submit" class="btn btn-primary">Enroll Now</button>
                         </form>
                         {% endif %}

@@ -1,0 +1,7 @@
+{% if new_announcement %}
+<div class="notification-popup">
+    <a href="{{ url_for('announcement.list_announcements') }}">
+        <strong>New Announcement:</strong> {{ new_announcement.title }}
+    </a>
+</div>
+{% endif %}

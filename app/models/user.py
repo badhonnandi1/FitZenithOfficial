@@ -19,8 +19,12 @@ class User(db.Model):
     bmi = db.Column(db.Float, nullable=True, default=0.0)
     bmr = db.Column(db.Float, nullable=True, default=0.0)
     maintenance_calories = db.Column(db.Float, nullable=True, default=0.0)
+    total_workout_volume = db.Column(db.Integer, default=0)
+    total_reward_score = db.Column(db.Integer, default=0)
 
-    course_enrollments = db.relationship('CourseEnrollment', backref='user', lazy=True, cascade="all, delete-orphan") # Add this line
+    course_enrollments = db.relationship('CourseEnrollment', backref='user', lazy=True, cascade="all, delete-orphan")
+    fitness_activities = db.relationship('FitnessActivity', backref='user', lazy=True, cascade="all, delete-orphan")
+
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -104,12 +108,6 @@ class User(db.Model):
         for i in password:
             mystring += chr(ord(i) + 3)
         return mystring
-    # @staticmethod
-    # def passwordDecryption(password):
-    #     mystring = ''
-    #     for i in password:
-    #         mystring += chr(ord(i) - 3)
-    #     return mystring
 
     @staticmethod
     def findUser(email):
@@ -121,6 +119,10 @@ class User(db.Model):
     @staticmethod
     def getUser(id):
         return User.query.get(id)
+
+    @staticmethod
+    def get_all_ordered_by_score():
+        return User.query.order_by(User.total_reward_score.desc()).all()
     
     def update(self, form_data):
         sql = text("""

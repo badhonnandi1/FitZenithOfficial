@@ -60,3 +60,9 @@ class CourseEnrollment(db.Model):
         db.session.add(enrollment)
         db.session.commit()
         return True, "Successfully enrolled in the course!"
+    
+    @staticmethod
+    def is_enrolled(user_id, course_id):
+        return CourseEnrollment.query.filter_by(user_id=user_id, course_id=course_id).first() is not None
+
+  

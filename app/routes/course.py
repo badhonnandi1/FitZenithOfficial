@@ -31,7 +31,7 @@ def course_details(course_id):
 
     is_enrolled = False
     if 'user_id' in session:
-        is_enrolled = CourseEnrollment.query.filter_by(user_id=session['user_id'], course_id=course_id).first() is not None
+        is_enrolled = CourseEnrollment.is_enrolled(session['user_id'], course_id)
 
     return render_template('courseDetails.html', course=course, is_enrolled=is_enrolled)
 
@@ -47,7 +47,7 @@ def enroll_course(course_id):
     else:
         flash(message, 'error')
     
-    return redirect(f'/courses/{course_id}/enroll')
+    return redirect(url_for('course.course_details', course_id=course_id))
 
 @course_bp.route('/my-courses')
 def my_courses():
@@ -55,7 +55,7 @@ def my_courses():
         flash('Please log in to view your courses.', 'error')
         return redirect('/login')
 
-    user = User.query.get(session['user_id'])
+    user = User.getUser(session['user_id'])
     enrolled_courses = [enrollment.course for enrollment in user.course_enrollments]
 
     return render_template('myCourses.html', enrolled_courses=enrolled_courses)

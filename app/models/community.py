@@ -15,6 +15,21 @@ class Post(db.Model):
     user = db.relationship('User', backref='posts', lazy=True)
     comments = db.relationship('Comment', backref='post', lazy=True, cascade="all, delete-orphan")
 
+    @staticmethod
+    def get_all():
+        return Post.query.order_by(Post.created_at.desc()).all()
+
+    @staticmethod
+    def get_by_id(post_id):
+        return Post.query.get_or_404(post_id)
+
+    @staticmethod
+    def create(title, content, user_id):
+        new_post = Post(title=title, content=content, user_id=user_id)
+        db.session.add(new_post)
+        db.session.commit()
+        return new_post
+
 class Comment(db.Model):
     __tablename__ = 'comment'
     id = db.Column(db.Integer, primary_key=True)
@@ -24,3 +39,10 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
 
     user = db.relationship('User', backref='comments', lazy=True)
+
+    @staticmethod
+    def create(content, user_id, post_id):
+        new_comment = Comment(content=content, user_id=user_id, post_id=post_id)
+        db.session.add(new_comment)
+        db.session.commit()
+        return new_comment

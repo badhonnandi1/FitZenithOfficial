@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    // --- HEADER SCROLL & MOBILE MENU ---
+
     const header = document.getElementById('main-header');
     const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // --- SCROLL-BASED FADE-IN ANIMATION ---
+
     const scrollObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -58,24 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updateSlider();
     });
 
-    // Optional: Auto-play slider
-    // setInterval(() => nextBtn.click(), 7000);
-
-    // --- TILT EFFECT FOR FEATURE CARDS ---
-    // A simplified CSS-only version is active by default.
-    // For a JS-powered 3D tilt, you would use a library like vanilla-tilt.js
-    // and initialize it like this:
-    // VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
-    //     max: 15,
-    //     speed: 400,
-    //     glare: true,
-    //     "max-glare": 0.5
-    // });
-    // This would require adding the library's script to your HTML.
-    // The current design uses CSS hover effects for a clean, no-dependency solution.
-
-    // --- ADMIN DASHBOARD VIEW SWITCHER ---
-    // This code should be added to your existing script.js file
+    
 
     document.addEventListener('DOMContentLoaded', function () {
 
@@ -88,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 link.addEventListener('click', function (e) {
                     e.preventDefault();
 
-                    // Get the target view from the data attribute
+
                     const targetViewId = this.getAttribute('data-view');
                     const targetView = document.getElementById(`view-${targetViewId}`);
 
@@ -105,8 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-        // ... your existing script.js code (header scroll, mobile menu, etc.)
-        // can remain here.
+        
     });
     document.addEventListener('DOMContentLoaded', function() {
         const loginForm = document.getElementById('login-form');
@@ -126,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
             loginForm.classList.remove('hidden');
         });
     
-        // Add form submission logic here later
+
     });
     
 

@@ -71,8 +71,7 @@ class MarathonRegistration(db.Model):
     registration_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     marathon_id = db.Column(db.Integer, db.ForeignKey('marathon.id'), nullable=False)
-    # paymentStatus = db.Column(db.String(20), default='pending')  
-    # paymentTime = db.Column(db.DateTime, nullable=True)
+
     
     user = db.relationship('User', backref='marathon_registrations', lazy=True)
 

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Resources</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header id="main-header">
+        <div class="container">
+            <a href="/" class="logo">Fit<strong>Zenith</strong></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/progress-tracker">Progress Tracker</a></li>
+                    <li><a href="/leaderboard" class="active">Leaderboard</a></li>
+                </ul>
+            </nav>
+            <div class="header-buttons">
+                {% if 'user_id' in session %}
+                <a href="/profile/view" class="btn btn-secondary">Profile</a>
+                <a href="/logout" class="btn btn-primary">Logout</a>
+                {% else %}
+                <a href="/login" class="btn btn-secondary">Login</a>
+                <a href="/register" class="btn btn-primary">Get Started</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    <main class="main-content">
+        <section id="resources-section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 class="section-title">Resources for {{ course.title }}</h1>
+                </div>
+                {% if session.get('role') == 'instructor' and course.instructor_id == session['user_id'] %}
+                <a href="{{ url_for('resource.upload_resource', course_id=course.id) }}" class="btn btn-primary">Upload New Resource</a>
+                {% endif %}
+                <table class="leaderboard-table" style="margin-top: 2rem;">
+                    <thead>
+                        <tr>
+                            <th>Resource Number</th>
+                            <th>Title</th>
+                            <th>Date Uploaded</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for resource in resources %}
+                        <tr>
+                            <td>{{ resource.resource_number }}</td>
+                            <td>{{ resource.title }}</td>
+                            <td>{{ resource.date_uploaded.strftime('%Y-%m-%d') }}</td>
+                            <td>
+                                <a href="{{ url_for('resource.view_resource', resource_id=resource.id) }}" class="btn btn-secondary">View</a>
+                                <a href="{{ url_for('resource.download_resource', resource_id=resource.id) }}" class="btn btn-primary">Download</a>
+                                {% if session.get('role') == 'instructor' and resource.instructor_id == session['user_id'] %}
+                                <form action="{{ url_for('resource.delete_resource', resource_id=resource.id) }}" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-secondary" style="background-color: #dc3545;">Delete</button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col about">
+                    <a href="#" class="logo">Fit<strong>Zenith</strong></a>
+                    <p>The operating system for serious fitness professionals and their clients.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Updates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Acceptable Use</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FitZenith. All Rights Reserved. Badhon Nandi.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

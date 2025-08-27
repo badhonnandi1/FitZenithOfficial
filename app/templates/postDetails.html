@@ -3,54 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ post.title }} - FitZenith</title>
+    <title>FitZenith</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        .post-container {
-            background: var(--surface-color);
-            border-radius: 16px;
-            padding: 40px;
-            border: 1px solid var(--border-color);
-        }
-        .post-details-header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .post-details-meta {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-        }
-        .post-details-content {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: var(--text-primary);
-            padding-bottom: 30px;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 30px;
-        }
-        .comments-section h2 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-        .comment-item {
-            background: var(--bg-color);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 15px;
-        }
-        .comment-meta {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-        }
-        .comment-content {
-            line-height: 1.6;
-        }
-    </style>
+
 </head>
 <body>
     <header id="main-header">
@@ -112,7 +68,7 @@
                     <div class="add-comment-form" style="margin-top: 30px;">
                         <h3 style="margin-bottom: 15px;">Leave a Comment</h3>
                         <form action="{{ url_for('community.add_comment', post_id=post.id) }}" method="POST">
-                            <textarea name="content" rows="4" placeholder="Write your comment here..." style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--dark-bg); color: var(--text-primary); margin-bottom: 10px;"></textarea>
+                            <textarea name="content" rows="4" placeholder="comment koren" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--dark-bg); color: var(--text-primary); margin-bottom: 10px;"></textarea>
                             <button type="submit" class="btn btn-primary">Submit Comment</button>
                         </form>
                     </div>

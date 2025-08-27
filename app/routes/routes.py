@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash,session, current_app
 from app import db
 from app.models.user import User
+from app.models.announcement import Announcement
 from werkzeug.utils import secure_filename
 import os
 
@@ -12,7 +13,7 @@ def landing_page():
 
 @main_bp.route('/afterlogin')
 def afterlogin_page():
-    print(session.get('user_id'))
+    # No longer need to query for announcements here
     return render_template('afterindex.html')
 
 
@@ -21,18 +22,20 @@ def view_profile():
     if 'user_id' not in session:
         return redirect(url_for('login'))
 
-    user = User().getUser(session.get('user_id'))
+    user_id = session.get('user_id')
+    return redirect(url_for('main.view_user_profile', user_id=user_id))
 
-    print(user)
 
+@main_bp.route('/user/<int:user_id>/profile')
+def view_user_profile(user_id):
+    user = User.getUser(user_id)
     if not user:
         return "<h1>User not found.</h1>"
-
     return render_template('profile.html', user=user)
+
 
 @main_bp.route('/profile/edit')
 def edit_profile():
-
 
     user = User().getUser(session.get('user_id'))
 

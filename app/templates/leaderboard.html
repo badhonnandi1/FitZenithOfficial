@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard - FitZenith</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/foodTracking.css">
+    <style>
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .leaderboard-table th, .leaderboard-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .leaderboard-table th {
+            background-color: var(--surface-color);
+        }
+        .leaderboard-table tr:nth-child(even) {
+            background-color: #1c1c1c;
+        }
+    </style>
+</head>
+<body>
+    <header id="main-header">
+        <div class="container">
+            <a href="/" class="logo">Fit<strong>Zenith</strong></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/progress-tracker">Progress Tracker</a></li>
+                    <li><a href="/leaderboard" class="active">Leaderboard</a></li>
+                </ul>
+            </nav>
+            <div class="header-buttons">
+                {% if 'user_id' in session %}
+                <a href="/profile/view" class="btn btn-secondary">Profile</a>
+                <a href="/logout" class="btn btn-primary">Logout</a>
+                {% else %}
+                <a href="/login" class="btn btn-secondary">Login</a>
+                <a href="/register" class="btn btn-primary">Get Started</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section id="leaderboard-section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 class="section-title"><span class="gradient-text">Leaderboard</span></h1>
+                    <p class="section-subtitle">See active members here</p>
+                </div>
+
+                <div class="tracking-summary-card">
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Username</th>
+                                <th>Total Reward Score</th>
+                                <th>Total Workout Volume</th>
+                                <th>Profile</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.total_reward_score }}</td>
+                                <td>{{ user.total_workout_volume }}</td>
+                                <td><a href="{{ url_for('main.view_user_profile', user_id=user.id) }}" class="btn btn-primary">View Profile</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <footer>
+        <div class="container">
+          <div class="footer-grid">
+            <div class="footer-col about">
+              <a href="#" class="logo">Fit<strong>Zenith</strong></a>
+              <p>The operating system for serious fitness professionals and their clients.</p>
+              <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              </div>
+            </div>
+            <div class="footer-col">
+              <h4>Product</h4>
+              <ul>
+                <li><a href="#">Features</a></li>
+                <li><a href="#"></a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Updates</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Company</h4>
+              <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Legal</h4>
+              <ul>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Acceptable Use</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>&copy; 2025 FitZenith. All Rights Reserved. Badhon Nandi.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

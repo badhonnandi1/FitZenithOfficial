@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FitZenith</title>
-    <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="../static/css/profile.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
@@ -68,7 +68,9 @@
                     <h2 class="profile-name">{{ user.name }}</h2>
                     <p class="profile-email"><i class="fas fa-envelope"></i> {{ user.email }}</p>
                     <p class="profile-phone"><i class="fas fa-phone"></i> {{ user.phone or '+88.....' }}</p>
+                    {% if session.get('user_id') == user.id %}
                     <a href="/profile/edit" class="btn btn-primary btn-update">Update Profile</a>
+                    {% endif %}
                 </div>
 
                 <div class="profile-info-card">
@@ -167,7 +169,7 @@
         </div>
     </footer>
 
-    <script src="../static/js/script.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 
 </html>

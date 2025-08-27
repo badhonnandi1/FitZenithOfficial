@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Resource</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/manageProfile.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header id="main-header">
+        <div class="container">
+            <a href="/" class="logo">Fit<strong>Zenith</strong></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{{ url_for('course.list_courses') }}">Courses</a></li>
+                    <li><a href="{{ url_for('main.afterlogin_page') }}">Dashboard</a></li>
+                </ul>
+            </nav>
+            <div class="header-buttons">
+                {% if 'user_id' in session %}
+                <a href="{{ url_for('main.view_profile') }}" class="btn btn-secondary">Profile</a>
+                <a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Logout</a>
+                {% else %}
+                <a href="{{ url_for('auth.login') }}" class="btn btn-secondary">Login</a>
+                <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Get Started</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <section id="update-profile-section">
+        <div class="update-form-container">
+            <div class="form-header">
+                <h1 class="section-title">Upload Resource for {{ course.title }}</h1>
+            </div>
+            <form action="{{ url_for('resource.upload_resource', course_id=course.id) }}" method="POST" enctype="multipart/form-data" class="update-form">
+                <h3 class="form-section-title">Resource Details</h3>
+                <div class="form-group">
+                    <label for="title">Resource Title</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-heading"></i>
+                        <input type="text" id="title" name="title" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="resource_number">Resource Number</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-list-ol"></i>
+                        <input type="number" id="resource_number" name="resource_number" min="1" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="pdf_file">PDF File</label>
+                    <div class="input-wrapper">
+                         <i class="fas fa-file-pdf"></i>
+                        <input type="file" id="pdf_file" name="pdf_file" accept=".pdf" required>
+                    </div>
+                </div>
+                <div class="form-buttons">
+                    <a href="{{ url_for('resource.list_resources', course_id=course.id) }}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Upload Resource</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col about">
+                    <a href="#" class="logo">Fit<strong>Zenith</strong></a>
+                    <p>The operating system for serious fitness professionals and their clients.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Updates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Acceptable Use</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FitZenith. All Rights Reserved. Badhon Nandi.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

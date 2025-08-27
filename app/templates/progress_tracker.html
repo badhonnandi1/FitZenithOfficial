@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Tracker - FitZenith</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/foodTracking.css') }}">
+</head>
+<body>
+    <header id="main-header">
+        <div class="container">
+            <a href="/" class="logo">Fit<strong>Zenith</strong></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/progress-tracker" class="active">Progress Tracker</a></li>
+                    <li><a href="/leaderboard">Leaderboard</a></li>
+                </ul>
+            </nav>
+            <div class="header-buttons">
+                {% if 'user_id' in session %}
+                <a href="/profile/view" class="btn btn-secondary">Profile</a>
+                <a href="/logout" class="btn btn-primary">Logout</a>
+                {% else %}
+                <a href="/login" class="btn btn-secondary">Login</a>
+                <a href="/register" class="btn btn-primary">Get Started</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section id="progress-tracker-section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 class="section-title"><span class="gradient-text">Track Your Workout</span></h1>
+                    <p class="section-subtitle">Consistency is key. Log your daily activity.</p>
+                </div>
+                
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <div style="max-width: 800px; margin: 0 auto 40px;">
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+
+                <div class="tracking-grid-single-column">
+                    <div class="tracking-summary-card">
+                        <h3 class="card-title">Your Totals</h3>
+                        <div class="summary-item">
+                            <span class="label">Total Reward Score</span>
+                            <span class="value">{{ user.total_reward_score }}</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Total Workout Volume</span>
+                            <span class="value">{{ user.total_workout_volume }}</span>
+                        </div>
+                    </div>
+
+                    <div class="search-results-card">
+                        <h3 class="card-title">Log a New Activity</h3>
+                        <form action="{{ url_for('progress_tracker.tracker_page') }}" method="POST">
+                            <div class="form-group">
+                                <select id="activity-type-select" name="activity_type" class="food-search-input" required style="width: 100%; padding: 10px 15px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--dark-bg); color: var(--text-primary); font-family: var(--font-family);">
+                                    <option value="" disabled selected>Select an Activity</option>
+                                    {% for activity in activities_config.keys() %}
+                                    <option value="{{ activity }}">{{ activity }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div id="dynamic-fields" style="margin-top: 15px;"></div>
+
+                            <button type="submit" class="btn btn-primary" style="width:100%; margin-top: 10px;">Log Activity</button>
+                        </form>
+                    </div>
+
+                    <div class="meal-log-card">
+                        <h3 class="card-title">Your Activity Log</h3>
+                        <ul class="food-list">
+                            {% for log in activity_log %}
+                            <li class="food-item">
+                                <div>
+                                    <strong>{{ log.activity_type }}</strong>
+                                    {% if log.sub_type %}
+                                        <div style="font-size: 0.9em; color: var(--text-secondary);">{{ log.sub_type }}</div>
+                                    {% endif %}
+                                    {% if log.duration %}
+                                        <div style="font-size: 0.9em; color: var(--text-secondary);">{{ log.duration }} minutes</div>
+                                    {% endif %}
+                                    <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 5px;">{{ log.created_at.strftime('%Y-%m-%d %H:%M') }}</div>
+                                </div>
+                                <span class="nutrient-info">
+                                    Volume: {{ log.workout_volume }}, Score: +{{ log.reward_score }}
+                                </span>
+                            </li>
+                            {% else %}
+                            <li>No activities logged yet.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+          <div class="footer-grid">
+            <div class="footer-col about">
+              <a href="#" class="logo">Fit<strong>Zenith</strong></a>
+              <p>The operating system for serious fitness professionals and their clients.</p>
+              <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              </div>
+            </div>
+            <div class="footer-col">
+              <h4>Product</h4>
+              <ul>
+                <li><a href="#">Features</a></li>
+                <li><a href="#"></a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Updates</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Company</h4>
+              <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Legal</h4>
+              <ul>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Acceptable Use</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>&copy; 2025 FitZenith. All Rights Reserved. Badhon Nandi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const activitiesConfig = {{ activities_config | tojson }};
+        const activitySelect = document.getElementById('activity-type-select');
+        const dynamicFieldsContainer = document.getElementById('dynamic-fields');
+
+        activitySelect.addEventListener('change', function() {
+            const selectedActivity = this.value;
+            const config = activitiesConfig[selectedActivity];
+            
+            dynamicFieldsContainer.innerHTML = ''; 
+
+            if (config && config.sub_options) {
+                const subTypeSelect = document.createElement('select');
+                subTypeSelect.name = 'sub_type';
+                subTypeSelect.className = 'food-search-input';
+                subTypeSelect.style.cssText = "width: 100%; padding: 10px 15px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--dark-bg); color: var(--text-primary); font-family: var(--font-family);";
+                
+                let defaultOption = new Option("Select a sub-type...", "", true, true);
+                defaultOption.disabled = true;
+                subTypeSelect.appendChild(defaultOption);
+
+                config.sub_options.forEach(option => {
+                    subTypeSelect.appendChild(new Option(option, option));
+                });
+                
+                dynamicFieldsContainer.appendChild(subTypeSelect);
+            }
+
+            if (config && config.requires_duration) {
+                const durationInput = document.createElement('input');
+                durationInput.type = 'number';
+                durationInput.name = 'duration';
+                durationInput.placeholder = 'Enter duration in minutes';
+                durationInput.required = true;
+                durationInput.min = '1';
+                durationInput.className = 'food-search-input';
+                durationInput.style.cssText = "width: 100%; padding: 10px 15px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--dark-bg); color: var(--text-primary); font-family: var(--font-family);";
+                dynamicFieldsContainer.appendChild(durationInput);
+            }
+        });
+    </script>
+</body>
+</html>
