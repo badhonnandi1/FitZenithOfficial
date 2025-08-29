@@ -43,7 +43,6 @@ class User(db.Model):
         if not self.height or not self.weight or self.weight <= 0 or self.height <= 0 or not self.dateOfBirth:
             return 0.0
         
-        # Ensure dateOfBirth is a date object
         dob = self.dateOfBirth
         if isinstance(dob, str):
             try:
@@ -104,10 +103,10 @@ class User(db.Model):
         return self.name
     
     @staticmethod
-    def get_all_ordered_by_score():
+    def leaderboardlist():
         return User.query.order_by(User.total_reward_score.desc()).all()
     
-    def update(self, form_data, new_filename=None):
+    def update(self, form_data, imageFile=None):
         self.name = form_data.get('name')
         self.phone = form_data.get('phone')
         self.goal = form_data.get('goal')
@@ -115,8 +114,8 @@ class User(db.Model):
         self.height = float(form_data.get('height', 0))
         self.dateOfBirth = form_data.get('dateOfBirth')
 
-        if new_filename:
-            self.profile_pic = new_filename
+        if imageFile:
+            self.profile_pic = imageFile
 
         if not self.dateOfBirth:
             self.dateOfBirth = '2000-01-01'
@@ -125,4 +124,4 @@ class User(db.Model):
         self.bmr = self.calculate_bmr()
         self.maintenance_calories = self.calculate_maintenance_calories()
 
-        db.session.commit()
+        self.save()

@@ -58,7 +58,7 @@
             <div class="profile-grid">
                 <div class="profile-card-main">
                     <div class="profile-picture-container">
-                        
+
                         <img src="{{ url_for('static', filename=user.profile_pic) if user.profile_pic else 'https://placehold.co/150x150/00B4DB/FFFFFF?text=Faka' }}" alt="Faka"
 
                             class="profile-picture">
@@ -104,7 +104,7 @@
                             <div class="metric-icon"><i class="fas fa-calculator"></i></div>
                             <span class="metric-label">BMI</span>
                             <span class="metric-value">{{ '%.1f'|format(user.bmi) if user.bmi else 0}}</span>
-                            <span class="metric-status healthy">Healthy</span>
+                            <span class="metric-status healthy">Will Update</span>
                         </div>
                         <div class="metric-item">
                             <div class="metric-icon"><i class="fas fa-fire"></i></div>

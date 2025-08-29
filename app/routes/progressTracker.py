@@ -57,5 +57,5 @@ def tracker_page():
 
 @progress_tracker_bp.route('/leaderboard')
 def leaderboard():
-    users = User.get_all_ordered_by_score()
+    users = User.leaderboardlist()
     return render_template('leaderboard.html', users=users)
