@@ -11,8 +11,8 @@
             <a href="/" class="logo">Fit<strong>Zenith</strong></a>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="{{ url_for('course.list_courses') }}">Courses</a></li>
-                    <li><a href="{{ url_for('main.afterlogin_page') }}">Dashboard</a></li>
+                    <li><a href="/courses/all">Courses</a></li>
+                    <li><a href="/afterlogin">Dashboard</a></li>
                 </ul>
             </nav>
             <div class="header-buttons">
@@ -34,7 +34,7 @@
                 </div>
 
                 {% if session.get('role') in ['admin', 'instructor'] %}
-                <a href="{{ url_for('announcement.create_announcement') }}" class="btn btn-primary">Create New Announcement</a>
+                <a href="/announcement/create" class="btn btn-primary">Create New Announcement</a>
                 {% endif %}
 
                 <div class="announcements-list" style="margin-top: 30px;">
@@ -48,8 +48,8 @@
 
                         {% if session.get('role') in ['admin', 'instructor'] and announcement.author_id == session['user_id'] %}
                         <div style="margin-top: 20px;">
-                            <a href="{{ url_for('announcement.update_announcement', announcement_id=announcement.id) }}" class="btn btn-secondary">Edit</a>
-                            <form action="{{ url_for('announcement.delete_announcement', announcement_id=announcement.id) }}" method="POST" style="display: inline-block; margin-left: 10px;">
+                            <a href="/announcement/update/{{announcement.id}}" class="btn btn-secondary">Edit</a>
+                            <form action="/announcement/delete/{{announcement.id}}" method="POST" style="display: inline-block; margin-left: 10px;">
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </div>

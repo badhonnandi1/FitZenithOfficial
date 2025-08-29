@@ -12,12 +12,12 @@ class Announcement(db.Model):
     seen_by = db.relationship('UserAnnouncementSeen', backref='announcement', lazy=True, cascade="all, delete-orphan")
 
     @staticmethod
-    def get_all():
+    def allAnnouncement():
         return Announcement.query.order_by(Announcement.date_created.desc()).all()
 
     @staticmethod
-    def get_by_id(announcement_id):
-        return Announcement.query.get(announcement_id)
+    def getByID(id):
+        return Announcement.query.get(id)
 
     @staticmethod
     def create(title, message, author_id):
@@ -32,8 +32,8 @@ class Announcement(db.Model):
         db.session.commit()
 
     @staticmethod
-    def delete(announcement_id):
-        announcement = Announcement.get_by_id(announcement_id)
+    def delete(id):
+        announcement = Announcement.getByID(id)
         if announcement:
             db.session.delete(announcement)
             db.session.commit()
@@ -41,7 +41,7 @@ class Announcement(db.Model):
         return False
 
     @staticmethod
-    def get_latest_unseen_announcement(user_id):
+    def UnseenAnnouncements(user_id):
         latest_announcement = Announcement.query.order_by(Announcement.date_created.desc()).first()
         if not latest_announcement:
             return None
@@ -59,8 +59,9 @@ class UserAnnouncementSeen(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
     @staticmethod
-    def mark_as_seen(user_id, announcement_id):
-        if not UserAnnouncementSeen.query.filter_by(user_id=user_id, announcement_id=announcement_id).first():
-            seen = UserAnnouncementSeen(user_id=user_id, announcement_id=announcement_id)
+    def seenMessage(userID, announcement_id):
+        if not UserAnnouncementSeen.query.filter_by(user_id=userID, announcement_id=announcement_id).first():
+
+            seen = UserAnnouncementSeen(user_id=userID, announcement_id=announcement_id)
             db.session.add(seen)
             db.session.commit()

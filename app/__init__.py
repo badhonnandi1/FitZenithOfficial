@@ -42,7 +42,7 @@ def create_app():
         from flask import session
         new_announcement = None
         if 'user_id' in session:
-            new_announcement = Announcement.get_latest_unseen_announcement(session['user_id'])
+            new_announcement = Announcement.UnseenAnnouncements(session['user_id'])
         return dict(new_announcement=new_announcement)
 
     with app.app_context():

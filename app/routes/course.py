@@ -6,41 +6,33 @@ course_bp = Blueprint('course', __name__)
 
 @course_bp.route('/courses/all')
 def list_courses():
-    courses = Course.get_all_courses()
+    courses = Course.AllCourses()
     return render_template('listCourses.html', courses=courses)
 
 @course_bp.route('/courses/create', methods=['GET', 'POST'])
 def create_course():
-    if session.get('role') != 'instructor':
-        flash('Permission denied. Only instructors can create courses.', 'error')
-        return redirect('/afterlogin')
-    
     if request.method == 'POST':
-        course = Course.create_course(request.form, session['user_id'])
-        flash(f'Course "{course.title}" created successfully!', 'success')
+        course = Course.createCourse(request.form, session['user_id'])
+        flash(f'Course "{course.title}" created', 'success')
         return redirect('/courses/all')
 
-    return render_template('create_course.html')
+    return render_template('createCourse.html')
 
 @course_bp.route('/courses/<int:course_id>/details')
 def course_details(course_id):
-    course = Course.get_by_id(course_id)
+    course = Course.getCourseByID(course_id)
     if not course:
-        flash('Course not found.', 'error')
+        flash('Painai', 'error')
         return redirect('/courses/all')
 
-    is_enrolled = False
+    result = False
     if 'user_id' in session:
-        is_enrolled = CourseEnrollment.is_enrolled(session['user_id'], course_id)
+        result = CourseEnrollment.is_enrolled(session['user_id'], course_id)
 
-    return render_template('courseDetails.html', course=course, is_enrolled=is_enrolled)
+    return render_template('courseDetails.html', course=course, is_enrolled=result)
 
 @course_bp.route('/courses/<int:course_id>/enroll', methods=['POST'])
 def enroll_course(course_id):
-    if 'user_id' not in session:
-        flash('You must be logged in to enroll in a course.', 'error')
-        return redirect('/login')
-    
     is_success, message = CourseEnrollment.enroll_user(session['user_id'], course_id)
     if is_success:
         flash(message, 'success')
@@ -51,31 +43,19 @@ def enroll_course(course_id):
 
 @course_bp.route('/my-courses')
 def my_courses():
-    if 'user_id' not in session:
-        flash('Please log in to view your courses.', 'error')
-        return redirect('/login')
-
     user = User.getUser(session['user_id'])
     enrolled_courses = [enrollment.course for enrollment in user.course_enrollments]
 
     return render_template('myCourses.html', enrolled_courses=enrolled_courses)
 
 
-@course_bp.route('/courses/<int:course_id>/delete', methods=['POST'])
-def delete_course(course_id):
-    if 'user_id' not in session:
-        flash('You must be logged in to perform this action.', 'error')
-        return redirect('/login')
-
-    course = Course.get_by_id(course_id)
+@course_bp.route('/courses/<int:id>/delete', methods=['POST'])
+def delete_course(id):
+    course = Course.getCourseByID(id)
     if not course:
         flash('Course not found.', 'error')
         return redirect('/courses/all')
 
-    if session.get('role') != 'admin' and session['user_id'] != course.instructor_id:
-        flash('Permission denied. You are not authorized to delete this course.', 'error')
-        return redirect('/courses/all')
-    
-    Course.delete_course(course_id)
+    Course.deleteCourse(id)
     flash(f"Course '{course.title}' deleted successfully!", 'success')
     return redirect('/courses/all')

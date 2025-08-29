@@ -31,7 +31,7 @@ class InstructorApplication(db.Model):
         return application
 
     @staticmethod
-    def get_all_pending():
+    def pendingApplication():
         return InstructorApplication.query.filter_by(status='pending').all()
 
     @staticmethod

@@ -14,7 +14,8 @@ def login():
         password = User.passwordEncryption(password)
 
         if not email or not password:
-            return "<h1>Error: Email and password are required.</h1>"
+            flash('Email and password are required.', 'error')
+            return redirect('/login')
 
         user = User.findUser(email)
         print(user)
@@ -27,8 +28,9 @@ def login():
 
             return redirect('/afterlogin')
         else:
-            return "<h1>Login Failed. Check your email and password.</h1>"
-
+            flash('Invalid email or password.', 'error')
+            return redirect('/login')
+        
     return render_template("login_reg.html")
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
@@ -44,8 +46,9 @@ def register():
 
         existing_user = User.findUser(email)
         if existing_user:
-            return "<h1>Error: A user with that email already exists.</h1>"
-
+            flash('Email already registered. Please log in.', 'error')
+            return redirect('/login')
+        
         new_user = User(name=name, email=email, password=password)
         new_user.save()
 

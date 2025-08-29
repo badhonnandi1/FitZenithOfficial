@@ -16,7 +16,7 @@ class Course(db.Model):
     enrollments = db.relationship('CourseEnrollment', backref='course', lazy=True, cascade="all, delete-orphan")
 
     @staticmethod
-    def create_course(form_data, instructor_id):
+    def createCourse(form_data, instructor_id):
         new_course = Course(
             title=form_data.get('title'),
             description=form_data.get('description'),
@@ -30,15 +30,15 @@ class Course(db.Model):
         return new_course
 
     @staticmethod
-    def get_all_courses():
+    def AllCourses():
         return Course.query.all()
     
     @staticmethod
-    def get_by_id(course_id):
-        return Course.query.get(course_id)
+    def getCourseByID(id):
+        return Course.query.get(id)
 
     @staticmethod
-    def delete_course(course_id):
+    def deleteCourse(course_id):
         course = Course.query.get(course_id)
         if course:
             db.session.delete(course)
@@ -63,6 +63,7 @@ class CourseEnrollment(db.Model):
     
     @staticmethod
     def is_enrolled(user_id, course_id):
-        return CourseEnrollment.query.filter_by(user_id=user_id, course_id=course_id).first() is not None
+        result = CourseEnrollment.query.filter_by(user_id=user_id, course_id=course_id).first()
+        return True if result else False
 
   

@@ -13,24 +13,24 @@ def landing_page():
 
 @main_bp.route('/afterlogin')
 def afterlogin_page():
-    # No longer need to query for announcements here
     return render_template('afterindex.html')
 
 
 @main_bp.route('/profile/view')
 def view_profile():
     if 'user_id' not in session:
-        return redirect(url_for('login'))
+        return redirect('/login')
 
     user_id = session.get('user_id')
-    return redirect(url_for('main.view_user_profile', user_id=user_id))
+    return redirect('/user/{}/profile'.format(user_id))
 
 
 @main_bp.route('/user/<int:user_id>/profile')
 def view_user_profile(user_id):
     user = User.getUser(user_id)
     if not user:
-        return "<h1>User not found.</h1>"
+        flash('Not found.', 'error')
+
     return render_template('profile.html', user=user)
 
 
@@ -38,19 +38,10 @@ def view_user_profile(user_id):
 def edit_profile():
 
     user = User().getUser(session.get('user_id'))
-
-    if not user:
-        return "<h1>User not found.</h1>"
-
     return render_template('manageProfile.html', user=user)
 
 @main_bp.route('/profile/update', methods=['GET', 'POST'])
 def update_profile():
-
-    if 'user_id' not in session:
-        flash('Please log in to access this page.', 'error')
-        return redirect(url_for('auth.login'))
-
     user = User.getUser(session.get('user_id'))
     if not user:
         flash('User not found. Please log in again.', 'error')
@@ -61,8 +52,8 @@ def update_profile():
 
         user.update(request.form)
         
-        flash('Your profile has been updated successfully!', 'success')
-        return redirect(url_for('main.view_profile'))
+        flash('Profile Updated', 'success')
+        return redirect('profile/view')
 
     dob_formatted = user.dateOfBirth.strftime('%Y-%m-%d') if user.dateOfBirth else ''
     return render_template('manageProfile.html', user=user, dob_formatted=dob_formatted)

@@ -13,13 +13,13 @@
             <a href="/" class="logo">Fit<strong>Zenith</strong></a>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="{{ url_for('course.list_courses') }}">Courses</a></li>
-                    <li><a href="{{ url_for('main.afterlogin_page') }}">Dashboard</a></li>
+                    <li><a href="/courses/all">Courses</a></li>
+                    <li><a href="/afterlogin">Dashboard</a></li>
                 </ul>
             </nav>
             <div class="header-buttons">
                 {% if 'user_id' in session %}
-                <a href="{{ url_for('main.view_profile') }}" class="btn btn-secondary">Profile</a>
+                <a href="/profile/view" class="btn btn-secondary">Profile</a>
                 <a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Logout</a>
                 {% else %}
                 <a href="{{ url_for('auth.login') }}" class="btn btn-secondary">Login</a>
@@ -34,7 +34,7 @@
             <div class="form-header">
                 <h1 class="section-title">Upload Resource for {{ course.title }}</h1>
             </div>
-            <form action="{{ url_for('resource.upload_resource', course_id=course.id) }}" method="POST" enctype="multipart/form-data" class="update-form">
+            <form action="/resource/upload/{{course.id}}" method="POST" enctype="multipart/form-data" class="update-form">
                 <h3 class="form-section-title">Resource Details</h3>
                 <div class="form-group">
                     <label for="title">Resource Title</label>

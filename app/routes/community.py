@@ -21,11 +21,7 @@ def create_post_form():
     return render_template('createPost.html')
 
 @community_bp.route('/community/postcreate', methods=['POST'])
-def create_post():
-    if 'user_id' not in session:
-        flash('You must be logged in to create a post.', 'error')
-        return redirect(url_for('auth.login'))
-    
+def create_post():    
     if request.method == 'POST':
         title = request.form.get('title')
         content = request.form.get('content')
@@ -34,7 +30,7 @@ def create_post():
         Post.create(title, content, user_id)
         
         flash('Post created successfully!', 'success')
-        return redirect(url_for('community.list_posts'))
+        return redirect('/community')
         
     return render_template('createPost.html')
 
@@ -54,4 +50,4 @@ def add_comment(post_id):
     Comment.create(content, user_id, post_id)
     
     flash('Comment added successfully!', 'success')
-    return redirect(url_for('community.post_details', post_id=post_id))
+    return redirect(f'/community/post/{post_id}')

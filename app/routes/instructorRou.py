@@ -5,11 +5,7 @@ from app.models.user import User
 instructor_bp = Blueprint('instructor', __name__)
 
 @instructor_bp.route('/apply', methods=['GET', 'POST'])
-def apply_instructor():
-    if 'user_id' not in session:
-        flash('You must be logged in to apply.', 'error')
-        return redirect('/login')
-    
+def apply_instructor():    
     user = User.getUser(session['user_id'])
     
     if request.method == 'POST':
@@ -23,16 +19,14 @@ def apply_instructor():
 @instructor_bp.route('/admin/applications')
 def admin_applications():
     if session.get('role') != 'admin':
-        flash('Permission denied.', 'error')
         return redirect('/')
 
-    pending_applications = InstructorApplication.get_all_pending()
+    pending_applications = InstructorApplication.pendingApplication()
     return render_template('adminApplicationsView.html', applications=pending_applications)
 
 @instructor_bp.route('/admin/applications/<int:app_id>/approve', methods=['POST'])
 def approve_application(app_id):
     if session.get('role') != 'admin':
-        flash('Permission denied.', 'error')
         return redirect('/')
     
     application = InstructorApplication.get_by_id(app_id)
@@ -57,5 +51,4 @@ def disapprove_application(app_id):
     else:
         flash('Application not found.', 'error')
         
-
     return redirect('/apply')

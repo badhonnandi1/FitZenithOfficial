@@ -71,10 +71,18 @@
           <p>Log meals and monitor your daily calorie and nutrient intake.</p>
         </a>
         {% if session.get('role') in ['admin', 'instructor'] %}
-        <a href="{{ url_for('announcement.list_announcements') }}" class="feature-card">
+        <a href="/announcement/list" class="feature-card">
           <div class="card-icon"><i class="fas fa-bullhorn"></i></div>
           <h3>Manage Announcements</h3>
-          <p>Create, edit, or delete announcements for all users.</p>
+          <p>View Announcements</p>
+          
+        </a>
+        {% endif %}
+        {% if session.get('role') not in ['admin', 'instructor'] %}
+        <a href="/announcement/list" class="feature-card">
+          <div class="card-icon"><i class="fas fa-bullhorn"></i></div>
+          <h3>View Announcements</h3>
+          <p>View Announcements</p>
         </a>
         {% endif %}
         <a href="/marathons/list" class="feature-card">
@@ -82,7 +90,7 @@
           <h3>View Upcoming Marathons</h3>
           <p>Explore all upcoming marathon events and register.</p>
         </a>
-        <a href="/upload-workout" class="feature-card">
+        <a href="/progress-tracker" class="feature-card">
           <div class="card-icon"><i class="fas fa-dumbbell"></i></div>
           <h3>Workout Plan</h3>
           <p>Upload and organize custom workout routines.</p>

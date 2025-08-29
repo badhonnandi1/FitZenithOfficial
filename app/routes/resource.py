@@ -16,17 +16,18 @@ def allowed_file(filename):
 @resource_bp.route('/course/<int:course_id>/resources')
 def list_resources(course_id):
     if 'user_id' not in session:
-        flash('Please log in to view resources.', 'error')
         return redirect(url_for('auth.login'))
 
     user_id = session['user_id']
-    is_enrolled = CourseEnrollment.is_enrolled(user_id, course_id)
-    course = Course.get_by_id(course_id)
+    enrolled = CourseEnrollment.is_enrolled(user_id, course_id)
+    course = Course.getCourseByID(course_id)
+
+    if course.instructor_id == user_id:
+        is_instructor = True
+    else:
+        is_instructor = False
     
-    is_instructor = course.instructor_id == user_id
-    
-    if not is_enrolled and not is_instructor and session.get('role') != 'admin':
-        flash('You are not enrolled in this course.', 'error')
+    if not enrolled and not is_instructor and session.get('role') != 'admin':
         return redirect(url_for('course.course_details', course_id=course_id))
 
     resources = Resource.get_by_course(course_id)
@@ -39,7 +40,7 @@ def upload_resource(course_id):
         flash('Only instructors can upload resources.', 'error')
         return redirect(url_for('course.course_details', course_id=course_id))
 
-    course = Course.get_by_id(course_id)
+    course = Course.getCourseByID(course_id)
     if course.instructor_id != session['user_id'] and session.get('role') != 'admin':
         flash('You are not the instructor of this course.', 'error')
         return redirect(url_for('course.course_details', course_id=course_id))
@@ -72,7 +73,7 @@ def upload_resource(course_id):
                 file_path=os.path.join('uploads/resources', filename)
             )
 
-            flash('Resource uploaded successfully!', 'success')
+            flash('Resource uploaded', 'success')
             return redirect(url_for('resource.list_resources', course_id=course_id))
         else:
             flash('Invalid file type. Only PDFs are allowed.', 'error')
@@ -81,23 +82,24 @@ def upload_resource(course_id):
     return render_template('upload_resource.html', course=course)
 
 @resource_bp.route('/resource/delete/<int:resource_id>', methods=['POST'])
-def delete_resource(resource_id):
+def deleteResource(resource_id):
     resource = Resource.get_by_id(resource_id)
     if session.get('role') != 'instructor' or resource.instructor_id != session['user_id'] and session.get('role') != 'admin':
         flash('You do not have permission to delete this resource.', 'error')
         return redirect(url_for('resource.list_resources', course_id=resource.course_id))
     
-    try:
-        os.remove(os.path.join(current_app.root_path, 'static', resource.file_path))
-    except OSError as e:
-        flash(f"Error deleting file: {e}", "error")
+    file_path = os.path.join(current_app.root_path, 'static', resource.file_path)
+    if os.path.exists(file_path):
+        os.remove(file_path)
+    else:
+        flash("File not found on server.", "error")
 
     Resource.delete(resource_id)
     flash('Resource deleted successfully.', 'success')
     return redirect(url_for('resource.list_resources', course_id=resource.course_id))
 
 @resource_bp.route('/resource/view/<int:resource_id>')
-def view_resource(resource_id):
+def viewResource(resource_id):
     resource = Resource.get_by_id(resource_id)
     is_enrolled = CourseEnrollment.is_enrolled(session['user_id'], resource.course_id)
     is_instructor = resource.instructor_id == session['user_id']
