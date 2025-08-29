@@ -58,10 +58,11 @@
             <div class="profile-grid">
                 <div class="profile-card-main">
                     <div class="profile-picture-container">
-                        <img src="https://placehold.co/150x150/00B4DB/FFFFFF?text=User" alt="User Profile Picture"
+                        
+                        <img src="{{ url_for('static', filename=user.profile_pic) if user.profile_pic else 'https://placehold.co/150x150/00B4DB/FFFFFF?text=Faka' }}" alt="Faka"
+
                             class="profile-picture">
-                        <label for="profile-upload" class="profile-upload-label">
-                            <i class="fas fa-camera"></i>
+
                         </label>
                         <input type="file" id="profile-upload" class="profile-upload-input">
                     </div>

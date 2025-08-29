@@ -17,11 +17,11 @@
             </nav>
             <div class="header-buttons">
                 {% if 'user_id' in session %}
-                <a href="{{ url_for('main.view_profile') }}" class="btn btn-secondary">Profile</a>
-                <a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Logout</a>
+                <a href="/profile/view" class="btn btn-secondary">Profile</a>
+                <a href="/logout" class="btn btn-primary">Logout</a>
                 {% else %}
-                <a href="{{ url_for('auth.login') }}" class="btn btn-secondary">Login</a>
-                <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Get Started</a>
+                <a href="/login" class="btn btn-secondary">Login</a>
+                <a href="/register" class="btn btn-primary">Get Started</a>
                 {% endif %}
             </div>
         </div>

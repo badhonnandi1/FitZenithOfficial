@@ -13,7 +13,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@resource_bp.route('/course/<int:course_id>/resources')
+@resource_bp.route('/course/<course_id>/resources')
 def list_resources(course_id):
     if 'user_id' not in session:
         return redirect(url_for('auth.login'))
@@ -34,17 +34,11 @@ def list_resources(course_id):
     return render_template('resources.html', resources=resources, course=course)
 
 
-@resource_bp.route('/resource/upload/<int:course_id>', methods=['GET', 'POST'])
+@resource_bp.route('/resource/upload/<course_id>', methods=['GET', 'POST'])
 def upload_resource(course_id):
-    if session.get('role') != 'instructor':
-        flash('Only instructors can upload resources.', 'error')
-        return redirect(url_for('course.course_details', course_id=course_id))
 
     course = Course.getCourseByID(course_id)
-    if course.instructor_id != session['user_id'] and session.get('role') != 'admin':
-        flash('You are not the instructor of this course.', 'error')
-        return redirect(url_for('course.course_details', course_id=course_id))
-    
+
     if request.method == 'POST':
         if 'pdf_file' not in request.files:
             flash('No file part', 'error')
@@ -81,7 +75,7 @@ def upload_resource(course_id):
 
     return render_template('upload_resource.html', course=course)
 
-@resource_bp.route('/resource/delete/<int:resource_id>', methods=['POST'])
+@resource_bp.route('/resource/delete/<resource_id>', methods=['POST'])
 def deleteResource(resource_id):
     resource = Resource.get_by_id(resource_id)
     if session.get('role') != 'instructor' or resource.instructor_id != session['user_id'] and session.get('role') != 'admin':
@@ -95,10 +89,10 @@ def deleteResource(resource_id):
         flash("File not found on server.", "error")
 
     Resource.delete(resource_id)
-    flash('Resource deleted successfully.', 'success')
+    flash('Deleted.', 'success')
     return redirect(url_for('resource.list_resources', course_id=resource.course_id))
 
-@resource_bp.route('/resource/view/<int:resource_id>')
+@resource_bp.route('/resource/view/<resource_id>')
 def viewResource(resource_id):
     resource = Resource.get_by_id(resource_id)
     is_enrolled = CourseEnrollment.is_enrolled(session['user_id'], resource.course_id)
@@ -107,9 +101,9 @@ def viewResource(resource_id):
         flash('You are not authorized to view this resource.', 'error')
         return redirect(url_for('course.course_details', course_id=resource.course_id))
         
-    return render_template('view_resource.html', resource=resource)
+    return render_template('viewResource.html', resource=resource)
 
-@resource_bp.route('/resource/download/<int:resource_id>')
+@resource_bp.route('/resource/download/<resource_id>')
 def download_resource(resource_id):
     resource = Resource.get_by_id(resource_id)
     is_enrolled = CourseEnrollment.is_enrolled(session['user_id'], resource.course_id)

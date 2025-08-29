@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ 'Edit' if announcement else 'Create' }} Announcement</title>
+    <title>Announcement</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/manageProfile.css') }}">
 </head>
@@ -18,11 +18,11 @@
             </nav>
             <div class="header-buttons">
                 {% if 'user_id' in session %}
-                <a href="{{ url_for('main.view_profile') }}" class="btn btn-secondary">Profile</a>
-                <a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Logout</a>
+                <a href="/profile/view" class="btn btn-secondary">Profile</a>
+                <a href="/logout" class="btn btn-primary">Logout</a>
                 {% else %}
-                <a href="{{ url_for('auth.login') }}" class="btn btn-secondary">Login</a>
-                <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Get Started</a>
+                <a href="/login" class="btn btn-secondary">Login</a>
+                <a href="/register" class="btn btn-primary">Get Started</a>
                 {% endif %}
             </div>
         </div>
@@ -42,7 +42,7 @@
                     <textarea id="message" name="message" rows="6" class="input-wrapper" required>{{ announcement.message if announcement else '' }}</textarea>
                 </div>
                 <div class="form-buttons">
-                    <a href="{{ url_for('announcement.list_announcements') }}" class="btn btn-secondary">Cancel</a>
+                    <a href="/announcement/list'" class="btn btn-secondary">Cancel</a>
                     <button type="submit" class="btn btn-primary">{{ 'Update' if announcement else 'Create' }}</button>
                 </div>
             </form>

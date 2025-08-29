@@ -23,13 +23,8 @@ class Resource(db.Model):
 
     @staticmethod
     def create(course_id, instructor_id, title, resource_number, file_path):
-        new_resource = Resource(
-            course_id=course_id,
-            instructor_id=instructor_id,
-            title=title,
-            resource_number=resource_number,
-            file_path=file_path
-        )
+        new_resource = Resource(course_id=course_id, instructor_id=instructor_id, title=title, resource_number=resource_number, file_path=file_path)
+        
         db.session.add(new_resource)
         db.session.commit()
         return new_resource

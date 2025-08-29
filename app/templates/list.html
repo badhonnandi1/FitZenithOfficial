@@ -64,7 +64,7 @@
             <div class="container">
 
                 {% if session.get('role') == 'admin' %}
-                    <a href="{{ url_for('marathon.createMarathon') }}" class="btn btn-primary">Create New Marathon</a>
+                    <a href="/create" class="btn btn-primary">Create New Marathon</a>
 
                 {% endif %}
             </div>

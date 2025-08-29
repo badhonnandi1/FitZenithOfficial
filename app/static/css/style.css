@@ -1117,3 +1117,56 @@ ooter {
         color: white;
         text-decoration: none;
     }
+.marathon-form {
+    max-width: 700px; 
+    margin: 0 auto;
+    background: var(--surface-color);
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.marathon-form input[type="text"],
+.marathon-form input[type="datetime-local"],
+.marathon-form input[type="number"],
+.marathon-form textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--dark-bg);
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.marathon-form input[type="text"]:focus,
+.marathon-form input[type="datetime-local"]:focus,
+.marathon-form input[type="number"]:focus,
+.marathon-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 168, 197, 0.25);
+}
+
+.marathon-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.marathon-form input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.8);
+    cursor: pointer;
+}

@@ -25,7 +25,7 @@ def createAnnouncement():
 
     return render_template('createAnnouncement.html')
 
-@announcement_bp.route('/announcement/update/<int:id>', methods=['GET', 'POST'])
+@announcement_bp.route('/announcement/update/<id>', methods=['GET', 'POST'])
 def updateAnnouncement(id):
     announcement = Announcement.getByID(id)    
     if request.method == 'POST':
@@ -37,7 +37,7 @@ def updateAnnouncement(id):
 
     return render_template('createAnnouncement.html', announcement=announcement)
 
-@announcement_bp.route('/announcement/delete/<int:id>', methods=['POST'])
+@announcement_bp.route('/announcement/delete/<id>', methods=['POST'])
 def delete_announcement(id):
     announcement = Announcement.getByID(id)
     if not announcement or (session.get('role') not in ['admin', 'instructor'] or announcement.author_id != session['user_id']):

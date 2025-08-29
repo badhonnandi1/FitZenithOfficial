@@ -25,7 +25,7 @@ def view_profile():
     return redirect('/user/{}/profile'.format(user_id))
 
 
-@main_bp.route('/user/<int:user_id>/profile')
+@main_bp.route('/user/<user_id>/profile')
 def view_user_profile(user_id):
     user = User.getUser(user_id)
     if not user:
@@ -40,6 +40,10 @@ def edit_profile():
     user = User().getUser(session.get('user_id'))
     return render_template('manageProfile.html', user=user)
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg', 'gif'}
+
 @main_bp.route('/profile/update', methods=['GET', 'POST'])
 def update_profile():
     user = User.getUser(session.get('user_id'))
@@ -49,11 +53,25 @@ def update_profile():
         return redirect(url_for('auth.login'))
 
     if request.method == 'POST':
+        
+        file = request.files.get('profile_pic')
+        new_filename = None
+        
+        if file and file.filename != '' and allowed_file(file.filename):
+            from uuid import uuid4
+            filename = str(uuid4()) + "_" + secure_filename(file.filename)
+            upload_folder = os.path.join(current_app.root_path, 'static/uploads/profile_pics')
+            if not os.path.exists(upload_folder):
+                os.makedirs(upload_folder)
+            
+            file_path = os.path.join(upload_folder, filename)
+            file.save(file_path)
+            new_filename = os.path.join('uploads/profile_pics', filename)
 
-        user.update(request.form)
+        user.update(request.form, new_filename)
         
         flash('Profile Updated', 'success')
-        return redirect('profile/view')
+        return redirect(url_for('main.view_profile'))
 
     dob_formatted = user.dateOfBirth.strftime('%Y-%m-%d') if user.dateOfBirth else ''
     return render_template('manageProfile.html', user=user, dob_formatted=dob_formatted)

@@ -33,7 +33,7 @@
                     <h1 class="section-title">Resources for {{ course.title }}</h1>
                 </div>
                 {% if session.get('role') == 'instructor' and course.instructor_id == session['user_id'] %}
-                <a href="{{ url_for('resource.upload_resource', course_id=course.id) }}" class="btn btn-primary">Upload New Resource</a>
+                <a href="/resource/upload/{{course.id}}" class="btn btn-primary">Upload New Resource</a>
                 {% endif %}
                 <table class="leaderboard-table" style="margin-top: 2rem;">
                     <thead>
@@ -51,10 +51,10 @@
                             <td>{{ resource.title }}</td>
                             <td>{{ resource.date_uploaded.strftime('%Y-%m-%d') }}</td>
                             <td>
-                                <a href="{{ url_for('resource.view_resource', resource_id=resource.id) }}" class="btn btn-secondary">View</a>
-                                <a href="{{ url_for('resource.download_resource', resource_id=resource.id) }}" class="btn btn-primary">Download</a>
+                                <a href="/resource/view/{{resource.id}}" class="btn btn-secondary">View</a>
+                                <a href="/resource/download/{{resource.id}}" class="btn btn-primary">Download</a>
                                 {% if session.get('role') == 'instructor' and resource.instructor_id == session['user_id'] %}
-                                <form action="{{ url_for('resource.delete_resource', resource_id=resource.id) }}" method="POST" style="display:inline;">
+                                <form action="/resource/delete/{{resource.id}}" method="POST" style="display:inline;">
                                     <button type="submit" class="btn btn-secondary" style="background-color: #dc3545;">Delete</button>
                                 </form>
                                 {% endif %}

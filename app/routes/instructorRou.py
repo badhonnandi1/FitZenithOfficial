@@ -24,7 +24,7 @@ def admin_applications():
     pending_applications = InstructorApplication.pendingApplication()
     return render_template('adminApplicationsView.html', applications=pending_applications)
 
-@instructor_bp.route('/admin/applications/<int:app_id>/approve', methods=['POST'])
+@instructor_bp.route('/admin/applications/<app_id>/approve', methods=['POST'])
 def approve_application(app_id):
     if session.get('role') != 'admin':
         return redirect('/')
@@ -38,7 +38,7 @@ def approve_application(app_id):
 
     return redirect('/apply')
 
-@instructor_bp.route('/admin/applications/<int:app_id>/disapprove', methods=['POST'])
+@instructor_bp.route('/admin/applications/<app_id>/disapprove', methods=['POST'])
 def disapprove_application(app_id):
     if session.get('role') != 'admin':
         flash('Permission denied.', 'error')

@@ -9,7 +9,7 @@ def list_posts():
     all_posts = Post.get_all()
     return render_template('listPost.html', posts=all_posts)
 
-@community_bp.route('/community/post/<int:post_id>')
+@community_bp.route('/community/post/<post_id>')
 def post_details(post_id):
     post = Post.get_by_id(post_id)
     return render_template('postDetails.html', post=post) 
@@ -34,7 +34,7 @@ def create_post():
         
     return render_template('createPost.html')
 
-@community_bp.route('/community/post/<int:post_id>/comment', methods=['POST'])
+@community_bp.route('/community/post/<post_id>/comment', methods=['POST'])
 def add_comment(post_id):
     if 'user_id' not in session:
         flash('You must be logged in to comment.', 'error')

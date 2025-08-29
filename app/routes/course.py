@@ -18,7 +18,7 @@ def create_course():
 
     return render_template('createCourse.html')
 
-@course_bp.route('/courses/<int:course_id>/details')
+@course_bp.route('/courses/<course_id>/details')
 def course_details(course_id):
     course = Course.getCourseByID(course_id)
     if not course:
@@ -31,7 +31,7 @@ def course_details(course_id):
 
     return render_template('courseDetails.html', course=course, is_enrolled=result)
 
-@course_bp.route('/courses/<int:course_id>/enroll', methods=['POST'])
+@course_bp.route('/courses/<course_id>/enroll', methods=['POST'])
 def enroll_course(course_id):
     is_success, message = CourseEnrollment.enroll_user(session['user_id'], course_id)
     if is_success:
@@ -49,7 +49,7 @@ def my_courses():
     return render_template('myCourses.html', enrolled_courses=enrolled_courses)
 
 
-@course_bp.route('/courses/<int:id>/delete', methods=['POST'])
+@course_bp.route('/courses/<id>/delete', methods=['POST'])
 def delete_course(id):
     course = Course.getCourseByID(id)
     if not course:
