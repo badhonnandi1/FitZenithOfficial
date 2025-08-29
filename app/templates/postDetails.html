@@ -33,48 +33,69 @@
 
     <main style="padding-top: 140px;">
         <section>
-            <div class="container" style="max-width: 900px;">
-                {% with messages = get_flashed_messages(with_categories=true) %}
+          <div class="container" style="max-width: 900px;">
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
-                <div style="max-width: 800px; margin: 0 auto 40px;">
-                    {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                </div>
-                {% endif %}
-                {% endwith %}
-                <div class="post-container">
-                    <div class="post-details-header">
-                        <h1>{{ post.title }}</h1>
-                        <p class="post-details-meta">By {{ post.user.name }} on {{ post.created_at.strftime('%B %d, %Y at %I:%M %p') }}</p>
-                    </div>
-                    <div class="post-details-content">
-                        <p>{{ post.content }}</p>
-                    </div>
-
-                    <div class="comments-section">
-                        <h2>Comments ({{ post.comments|length }})</h2>
-                        {% for comment in post.comments | sort(attribute='created_at') %}
-                        <div class="comment-item">
-                            <p class="comment-meta">By {{ comment.user.name }} at {{ comment.created_at.strftime('%I:%M %p') }}</p>
-                            <p class="comment-content">{{ comment.content }}</p>
-                        </div>
-                        {% else %}
-                        <p class="section-subtitle">No comments yet. Be the first to comment!</p>
+                    <div class="flash-messages-container">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">{{ message }}</div>
                         {% endfor %}
                     </div>
-                    
-                    {% if 'user_id' in session %}
-                    <div class="add-comment-form" style="margin-top: 30px;">
-                        <h3 style="margin-bottom: 15px;">Leave a Comment</h3>
-                        <form action="{{ url_for('community.add_comment', post_id=post.id) }}" method="POST">
-                            <textarea name="content" rows="4" placeholder="comment koren" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--dark-bg); color: var(--text-primary); margin-bottom: 10px;"></textarea>
-                            <button type="submit" class="btn btn-primary">Submit Comment</button>
-                        </form>
-                    </div>
-                    {% endif %}
+                {% endif %}
+            {% endwith %}
+        
+            <!-- Main Post Container -->
+            <div class="post-container">
+                <div class="post-details-header">
+                    <h1 class="post-title-main">{{ post.title }}</h1>
+                    <p class="post-details-meta">
+                      
+                      <div class="comment-author-avatar">
+                        <img src="{{ url_for('static', filename=post.user.profile_pic) if post.user.profile_pic else 'https://placehold.co/50x50/00B4DB/FFFFFF?text=' + post.user.name[0] }}" alt="{{ post.user.name }}'s avatar">
+                        <i class="fas fa-user"></i> By {{ post.user.name }} 
+                      </div>
+                      <span class="meta-separator"></span>
+                        <i class="fas fa-calendar-alt"></i> {{ post.created_at.strftime('%B %d, %Y at %I:%M %p') }}
+                    </p>
                 </div>
+                <div class="post-details-content">
+                    <p>{{ post.content | safe }}</p>
+                </div>
+      
+
+                <div class="comments-section">
+                    <h2 class="comments-title">Comments</h2>
+                    
+                    {% for comment in post.comments | sort(attribute='created_at') %}
+                    <div class="comment-item">
+                        <div class="comment-author-avatar">
+                            <img src="{{ url_for('static', filename=comment.user.profile_pic) if comment.user.profile_pic else 'https://placehold.co/50x50/00B4DB/FFFFFF?text=' + comment.user.name[0] }}" alt="{{ comment.user.name }}'s avatar">
+                        </div>
+                        <div class="comment-body">
+                            <p class="comment-meta">
+                                <strong>{{ comment.user.name }}</strong>
+                                <span class="comment-timestamp">{{ comment.created_at.strftime('%I:%M %p') }}</span>
+                            </p>
+                            <p class="comment-content">{{ comment.content }}</p>
+                        </div>
+                    </div>
+                    {% else %}
+                    <p class="section-subtitle">No comments yet. Be the first to comment!</p>
+                    {% endfor %}
+                </div>
+                
+                {% if 'user_id' in session %}
+                <div class="add-comment-form">
+                    <h3 class="add-comment-title">Leave a Comment</h3>
+                    <form action="/community/post/{{ post.id }}/comment" method="POST">
+                        <textarea name="content" rows="4" placeholder="Share your thoughts..." required></textarea>
+                        <button type="submit" class="btn btn-primary">Submit Comment</button>
+                    </form>
+                </div>
+                {% endif %}
             </div>
+        </div>
         </section>
     </main>
     <footer>

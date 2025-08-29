@@ -39,7 +39,7 @@ def register():
 
         name = request.form.get('username')
         email = request.form.get('email')
-        password = request.form.get('password')
+        password = User.passwordEncryption(request.form.get('password'))
 
         if not all([name, email, password]):
             return "<h1>Error: All fields are required.</h1>"

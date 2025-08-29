@@ -16,8 +16,8 @@
             <nav class="main-nav">
                 <ul>
                     <li><a href="/community" class="active">Community</a></li>
-                    <li><a href="/#">Features</a></li>
-                    <li><a href="/#"></a></li>
+                    <li><a href="/">Features</a></li>
+                    <li><a href="/"></a></li>
                 </ul>
             </nav>
             <div class="header-buttons">
@@ -42,16 +42,28 @@
                     <a href="/community/createpost" class="btn btn-primary" style="margin-top: 20px;">Create a New Post</a>
                     {% endif %}
                 </div>
+
                 <div class="posts-list">
                     {% for post in posts %}
-                    <a href="{{ url_for('community.post_details', post_id=post.id) }}" class="post-card">
+
+                    <a href="/community/post/{{ post.id }}" class="post-card">
                         <h3 class="post-title">{{ post.title }}</h3>
-                        <p class="post-meta">Posted by {{ post.user.name }} on {{ post.created_at.strftime('%B %d, %Y') }} - {{ post.comments|length }} comments</p>
+                        <p class="post-meta">
+                            <span class="meta-author"><i class="fas fa-user"></i> Posted by {{ post.user.name }}</span>
+                            <span class="meta-date"><i class="fas fa-calendar-alt"></i> {{ post.created_at.strftime('%B %d, %Y') }}</span>
+                            <span class="meta-comments"><i class="fas fa-comment"></i> {{ post.comments|length }} comments</span>
+                            
+                        </p>
                         <p class="post-content-preview">{{ post.content[:150] }}...</p>
-                        <span class="post-link">Read More & Comment <i class="fas fa-arrow-right"></i></span>
+                        <div class="post-link-wrapper">
+                            <span class="post-link">Read More & Comment <i class="fas fa-arrow-right"></i></span>
+                        </div>
                     </a>
                     {% else %}
-                    <p class="section-subtitle" style="text-align: center;">No posts found. Be the first to post!</p>
+                    <div class="no-posts-message">
+                        <p class="section-subtitle">No posts found. Be the first to post!</p>
+                        <a href="/community/createpost" class="btn btn-primary" style="margin-top: 20px;">Create a New Post</a>
+                    </div>
                     {% endfor %}
                 </div>
             </div>

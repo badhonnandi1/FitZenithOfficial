@@ -25,7 +25,7 @@ class Post(db.Model):
 
     @staticmethod
     def create(title, content, user_id):
-        new_post = Post(title=title, content=content, user_id=user_id)
+        new_post = Post(title=title, content=content, user_id=user_id, created_at=datetime.now())
         db.session.add(new_post)
         db.session.commit()
         return new_post
@@ -42,7 +42,8 @@ class Comment(db.Model):
 
     @staticmethod
     def create(content, user_id, post_id):
-        new_comment = Comment(content=content, user_id=user_id, post_id=post_id)
+        time = datetime.now()
+        new_comment = Comment(content=content, user_id=user_id, post_id=post_id, created_at=time)
         db.session.add(new_comment)
         db.session.commit()
         return new_comment
