@@ -29,18 +29,7 @@ The main goal of FitZenith is to **enhance the effectiveness of fitness training
 
 ---
 
-##  Key Features :3
-
-###  Profile Management
-- View and update personal details (name, phone number, fitness stats).
-- Auto-calculation of **BMI**, **BMR**, and **maintenance calories**.
-
-###  Event Management
-- **Admins only** can create/delete marathon events.
-- Users can view upcoming events and register for available slots.
-
-###  Secure Authentication
-- Session-based login/logout system with account registration.
+##  Key Features 
 
 ###  Role-Based Access Control
 - Different views and permissions for admins, instructors, and users.
@@ -62,7 +51,7 @@ FitZenith follows the **Model-View-Controller (MVC)** pattern for better maintai
 | Layer        | Technology                    |
 |--------------|-------------------------------|
 | Backend      | Flask (Python Web Framework)  |
-| Database     | MySQL + SQLAlchemy      |
+| Database     | MySQL Server + SQLAlchemy ORM |
 | Frontend     | HTML, CSS, JavaScript         |
 | Templates    | Jinja2                        |
 
