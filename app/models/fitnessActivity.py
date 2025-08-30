@@ -13,7 +13,7 @@ class FitnessActivity(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     @staticmethod
-    def calculate_score_and_volume(activity_type, sub_type=None, duration=None):
+    def calculateScore(activity_type, sub_type=None, duration=None):
         score = 0
         volume = 1  
 
@@ -25,7 +25,7 @@ class FitnessActivity(db.Model):
             score = 15
         elif activity_type == 'Strength Training':
             score = 30
-        elif activity_type in ['Cardio', 'Yoga']:
+        elif activity_type in ['Cardio', 'Yoga', 'Football']:
             if duration:
                 score = duration * 1  
                 volume = duration
@@ -38,7 +38,7 @@ class FitnessActivity(db.Model):
     def add_activity(user_id, activity_type, sub_type=None, duration=None):
         from app.models.user import User
 
-        reward_score, workout_volume = FitnessActivity.calculate_score_and_volume(
+        reward_score, workout_volume = FitnessActivity.calculateScore(
             activity_type, sub_type, duration
         )
 
