@@ -17,8 +17,11 @@ ACTIVITIES_CONFIG = {
     'Yoga': {
         'requires_duration': True
     },
+    'Football': {
+        'requires_duration': True
+    },
     'Strength Training': {
-        'sub_options': ['Deadlift', 'Squats']
+        'sub_options': ['Deadlift', 'Squats','Bench Press']
     }
 }
 

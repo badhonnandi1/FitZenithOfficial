@@ -59,9 +59,7 @@ class MarathonRegistration(db.Model):
     marathon_id = db.Column(db.Integer, db.ForeignKey('marathon.id'), nullable=False)
 
     user = db.relationship('User', backref='marathon_registrations', lazy=True)
-    
-    def __repr__(self):
-        return f'<MarathonRegistration UserID: {self.user_id}, MarathonID: {self.marathon_id}>'
+
 
     @staticmethod
     def checkRegister(user_id, marathon_id):
